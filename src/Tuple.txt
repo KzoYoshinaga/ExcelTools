@@ -47,16 +47,6 @@ End Property
 
 ' クエリ *****************************
 
-' 値追加
-' @param v: Value 追加する値
-' @return Tuple 値が追加された新しいタプル
-Public Property Get add(v) As Tuple
-    Dim vs As collection
-    Set vs = newCollection(values)
-    vs.add v
-    Set add = newTuple(vs)
-End Property
-
 ' 値挿入
 ' @param that: Tuple 挿入する値を持つタプル
 ' @param dest: Integer 挿入先の要素番号
@@ -118,7 +108,7 @@ Public Property Get trim(from As Integer, size As Integer) As Tuple
     f = middle(1, from, count())
     ' 件数修正
     Dim s As Integer
-    s = greater(1, size)
+    s = greater(0, size)
     ' 終了番号
     Dim l As Integer
     l = less(values.count, f + s - 1)
@@ -175,19 +165,9 @@ End Property
 ' @param no: Integer 分割する場所のインデックス
 ' @return TupleCollection 分割されたタプルを含むコレクション
 Public Property Get split(no As Integer) As Tuples2
-    Dim left As New Tuple
-    Dim right As New Tuple
-    Dim i As Integer
-    For i = 1 To values.count
-        If i < no Then
-            Set left = left.add(values(i))
-        Else
-            Set right = right.add(values(i))
-        End If
-    Next
     Dim r As New Tuples2
-    r.setLeft = left
-    r.setRight = right
+    r.setLeft = trim(1, no - 1)
+    r.setRight = trim(no + 1, count() - no + 1)
     Set split = r
 End Property
 

@@ -18,28 +18,6 @@ Function createNewInstance()
     verify result, testName
 End Function
 
-' add() **********************************************
-
-' 新しい要素が追加されること
-Private Function addNewValue()
-    ' SetTestName
-    testName = "addNewValue()"
-
-    ' Arrange
-    Dim values As New collection
-    values.add "a"
-      
-    Dim t As New Tuple
-    t.setValues = values
-    
-    ' Do
-    Set t = t.add("b")
-    
-    ' Verification
-    result = equals(t.toString, "Tuple(a, b)")
-    verify result, testName
-End Function
-
 ' remove() *********************************************
 
 ' 要素が一件削除できること
@@ -109,6 +87,27 @@ Private Function removeAllAfterFrom()
 End Function
 
 ' trim() ***************************************************
+
+' サイズ指定が0の場合要素が抜き出せないこと
+Private Function trimNoValueWhenSize0()
+    ' SetTestName
+    testName = "trimNoValueWhenSize0()"
+
+    ' Arrange
+    Dim values As New collection
+    values.add "a"
+    values.add "b"
+     
+    Dim t As New Tuple
+    t.setValues = values
+    
+    ' Do
+    Set t = t.trim(1, 0)
+    
+    ' Verifivation
+    result = equals(t.toString, "Tuple()")
+    verify result, testName
+End Function
 
 ' 要素を一件抜き出せること
 Private Function trim1Value()
@@ -314,7 +313,7 @@ Private Function split2TuplesWhenInsideCount()
     ' Do
     Dim ts2 As Tuples2
     Set ts2 = t.split(4)
-    
+        
     ' Verification
     result = equals(ts2.toString, "Tuples2(Tuple(a, b, c), Tuple(d))")
     verify result, testName
@@ -337,8 +336,8 @@ Private Function rightTuplesEmptyWhenLargerCount()
     
     ' Do
     Dim ts2 As Tuples2
-    Set ts2 = t.split(8)
-    
+    Set ts2 = t.split(5)
+        
     ' Verification
     result = equals(ts2.toString, "Tuples2(Tuple(a, b, c, d), Tuple())")
     verify result, testName
@@ -629,15 +628,14 @@ Function TupleTest()
     
     createNewInstance
     
-    ' add()
-    addNewValue
-    
+   
     ' remove()
     removeValue
     removeValues
     removeAllAfterFrom
     
     ' trim()
+    trimNoValueWhenSize0
     trim1Value
     trimValues
     trimAllAfterFrom

@@ -1,0 +1,52 @@
+' ƒwƒ‹ƒp ***************************
+Function equals(t1, t2)
+    If t1 = t2 Then
+        equals = True
+    Else
+        equals = False
+    End If
+End Function
+
+Function verify(result, testName)
+    If result Then
+        Debug.Print " Success : " & testName
+    Else
+        Debug.Print " Fail: " & testName
+    End If
+End Function
+
+Function less(n1 As Integer, n2 As Integer) As Integer
+    If n1 < n2 Then
+        less = n1
+    Else
+        less = n2
+    End If
+End Function
+
+Function greater(n1 As Integer, n2 As Integer) As Integer
+    If n1 > n2 Then
+        greater = n1
+    Else
+        greater = n2
+    End If
+End Function
+
+Function middle(n1 As Integer, n2 As Integer, n3 As Integer) As Integer
+    Dim s As Integer
+    s = less(n1, n3)
+    Dim l As Integer
+    l = greater(n1, n3)
+    Dim r As Integer
+    r = greater(s, n2)
+    r = less(r, l)
+    middle = r
+End Function
+
+Function newCollection(c As collection) As collection
+    Dim r As New collection
+    For Each v In c
+        r.add v
+    Next
+    Set newCollection = r
+End Function
+

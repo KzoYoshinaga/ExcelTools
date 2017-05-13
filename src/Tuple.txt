@@ -175,12 +175,7 @@ End Property
 ' @param that: Tuple マージ対象タプル
 ' @return Tuple マージされた新しいタプル
 Public Property Get marge(that As Tuple) As Tuple
-    Dim vs As collection
-    Set vs = newCollection(values)
-    For Each v In that.getValues
-        vs.add v
-    Next
-    Set marge = newTuple(vs)
+    Set marge = insert(that, count() + 1)
 End Property
 
 ' 交互マージ

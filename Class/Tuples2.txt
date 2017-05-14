@@ -1,0 +1,39 @@
+' メンバ *****************************
+Private left As New Tuple
+Private right As New Tuple
+
+' イニシャライザ *********************
+Public Property Let setLeft(l As Tuple)
+    Set left = l.clone()
+End Property
+
+Public Property Let setRight(r As Tuple)
+    Set right = r.clone()
+End Property
+
+' オブジェクト共通 ********************
+Public Property Get toString()
+    toString = "Tuples2(" & left.toString & ", " & right.toString & ")"
+End Property
+
+Public Property Get equals(that As Tuple)
+    If toString() = that.toString Then
+        equals = True
+    Else
+        equals = False
+    End If
+End Property
+
+' クエリ *****************************
+
+Public Property Get getLeft() As Tuple
+    Set getLeft = left.clone()
+End Property
+
+Public Property Get getRight() As Tuple
+    Set getRight = right.clone()
+End Property
+
+Public Property Get marge() As Tuple
+    Set marge = left.marge(right)
+End Property

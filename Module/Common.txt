@@ -15,7 +15,7 @@ Function verify(result, testName)
     End If
 End Function
 
-Function less(n1 As Integer, n2 As Integer) As Integer
+Function less(n1 As Long, n2 As Long) As Long
     If n1 < n2 Then
         less = n1
     Else
@@ -23,7 +23,7 @@ Function less(n1 As Integer, n2 As Integer) As Integer
     End If
 End Function
 
-Function greater(n1 As Integer, n2 As Integer) As Integer
+Function greater(n1 As Long, n2 As Long) As Long
     If n1 > n2 Then
         greater = n1
     Else
@@ -31,12 +31,12 @@ Function greater(n1 As Integer, n2 As Integer) As Integer
     End If
 End Function
 
-Function middle(n1 As Integer, n2 As Integer, n3 As Integer) As Integer
-    Dim s As Integer
+Function middle(n1 As Long, n2 As Long, n3 As Long) As Long
+    Dim s As Long
     s = less(n1, n3)
-    Dim l As Integer
+    Dim l As Long
     l = greater(n1, n3)
-    Dim r As Integer
+    Dim r As Long
     r = greater(s, n2)
     r = less(r, l)
     middle = r

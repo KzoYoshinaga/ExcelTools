@@ -34,7 +34,6 @@ Public Property Get export(r As Range)
     For i = 1 To tuples.count()
         Set t = tuples.getValue(i)
         For j = 1 To t.count()
-            Debug.Print t.getValue(j).getValue
             r.Offset(i - 1, j - 1).value = t.getValue(j).getValue
         Next
     Next
@@ -52,19 +51,28 @@ End Property
 
 ' 行交互マージ
 Public Property Get zip(that As table) As table
+    Dim count As Long
+    count = less(getRowCount(), that.getRowCount())
     Dim f As New Factory
-    Dim t As Tuple
-    Set t = tuples.zip(that.getTuples())
-    
-    Debug.Print t.count
-    
-    Set zip = f.newTable(t)
+    Dim c As New collection
+    Dim i As Long
+    For i = 1 To count
+        c.add getTuple(i).zip(that.getTuple(i))
+    Next
+    Set zip = f.newTable(f.newTuple(c))
 End Property
 
 
 ' 列交互マージ
-Public Property Get pile(that As table)
+Public Property Get pile(that As table) As table
+    Dim f As New Factory
+    Dim t As Tuple
+    Set t = tuples.zip(that.getTuples())
+    Set pile = f.newTable(t)
+End Property
 
+Public Property Get getTuple(n As Long) As Tuple
+    Set getTuple = tuples.getValue(n)
 End Property
 
 ' タプタプ
@@ -72,3 +80,6 @@ Public Property Get getTuples() As Tuple
     Set getTuples = tuples
 End Property
 
+Public Property Get getRowCount() As Long
+    getRowCount = tuples.count()
+End Property

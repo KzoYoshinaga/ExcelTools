@@ -1,0 +1,7 @@
+Private Function test()
+    Dim tbl As New table
+    r = tbl.import(Sheets("Sheet1"))
+    
+    r = tbl.export(Sheets("Sheet2").Range("A1"))
+    
+End Function

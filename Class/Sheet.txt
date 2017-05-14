@@ -1,0 +1,58 @@
+' メンバ **********************************
+Private s As Worksheet
+
+
+' イニシャライザ *********************
+Public Property Let setValues(sheet As Worksheet)
+    Set s = sheet
+End Property
+
+' オブジェクト共通 ********************
+Public Property Get toString()
+    toString = "Sheet(" & sheet.Name & ")"
+End Property
+
+Public Property Get equals(that As Tuple)
+    If toString() = that.toString Then
+        equals = True
+    Else
+        equals = False
+    End If
+End Property
+
+' 行数取得
+' @return Long シートの行数
+Public Property Get getRowCount() As Long
+    If s.Range("A1").value = "" Then
+        getRowCount = 0
+    ElseIf s.Range("A2").value = "" Then
+        getRowCount = 1
+    Else
+        getRowCount = s.Range("A1").End(xlDown).row
+    End If
+End Property
+
+' 列数取得
+' @return Long シートの列数
+Public Property Get getColumnCount() As Long
+    If s.Range("A1").value = "" Then
+        getColumnCount = 0
+    ElseIf s.Range("B1").value = "" Then
+        getColumnCount = 1
+    Else
+        getColumnCount = s.Range("A1").End(xlToRight).Column
+    End If
+End Property
+
+
+' 指定された行の値のコレクションを返す　=>　独自オブジェクトでラップする
+' @param rowNo: Long 取得する値コレクションの行
+' @return Collection 指定した行の値コレクション
+Public Function getRowCollection(rowNo As Long) As collection
+    Dim c As New collection
+    For i = 1 To getColumnCount()
+        c.add s.Cells(rowNo, i).value
+    Next
+    Set getRowCollection = c
+End Function
+

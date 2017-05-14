@@ -1,0 +1,69 @@
+' 可変オブジェクト
+
+' メンバー ***************************
+Private header As New Tuple
+Private tuples As New Tuple
+
+' イニシャライザ *********************
+' ヘッダセット
+Public Property Let setHeader(h As Tuple)
+    Set header = h
+End Property
+' タプルセット
+Public Property Let setTuples(ts As collection)
+    Set tuples = ts
+End Property
+
+' クエリ *****************************
+
+' データインポート
+' @param s: Worksheet インポートするテーブルが格納されたシート
+Public Property Get import(s As Worksheet)
+    Dim f As New Factory
+    Dim sh As sheet
+    Set sh = f.newSheet(s)
+    Dim c As New collection
+    Dim i As Long
+    For i = 1 To sh.getRowCount()
+        c.add f.newTuple(sh.getRowCollection(i))
+    Next
+    Set tuples = f.newTuple(c)
+End Property
+
+' データエクスポート
+' @param r: Range エクスポートするテーブルを配置するセル
+Public Property Get export(r As Range)
+    Dim i As Long
+    Dim j As Long
+    r = tuples.getValue(1)
+    Dim t
+    For i = 1 To tuples.count()
+        'r = tuples.getValue(i)
+        'For j = 1 To t.count()
+        '    r.Offset(i - 1, j - 1).value = t.getValue(j)
+        'Next
+    Next
+End Function
+
+' 行分割
+Public Property Get splitColumn(columnNo As Integer)
+
+End Property
+
+' 列分割
+Public Property Get splitRow(rowNo As Integer)
+
+End Property
+
+' 行交互マージ
+Public Property Get zip(that As table)
+    
+End Property
+
+
+' 列交互マージ
+Public Property Get pile(that As table)
+
+End Property
+
+

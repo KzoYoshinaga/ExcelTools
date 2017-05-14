@@ -45,7 +45,7 @@ Public Property Get equals(that As Tuple)
     End If
 End Property
 
-' クエリ *****************************
+' メソッド *****************************
 
 ' 値抜き出し
 ' @param s: Selection 抜き出す値の選択範囲

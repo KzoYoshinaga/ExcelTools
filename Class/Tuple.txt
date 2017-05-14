@@ -195,7 +195,7 @@ End Property
 ' @param no 取り出す要素番号
 ' @return 取り出す要素
 Public Property Get getValue(no As Long)
-    getValue = values(no)
+    Set getValue = values(no)
 End Property
 
 ' 要素数を取得

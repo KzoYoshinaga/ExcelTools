@@ -32,3 +32,14 @@ Function newSheet(s As Worksheet) As sheet
     Set newSheet = r
 End Function
 
+Function newElement(v) As Element
+    Dim r As New Element
+    r.setValue = v
+    Set newElement = r
+End Function
+
+Function newTable(tuples As Tuple) As table
+    Dim r As New table
+    r.setTuples = tuples
+    Set newTable = r
+End Function

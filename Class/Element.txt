@@ -1,0 +1,9 @@
+Private v
+
+Public Property Let setValue(value)
+    v = value
+End Property
+
+Public Property Get getValue()
+    getValue = v
+End Property

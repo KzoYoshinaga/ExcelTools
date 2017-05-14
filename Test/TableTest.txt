@@ -1,7 +1,11 @@
 Private Function test()
-    Dim tbl As New table
-    r = tbl.import(Sheets("Sheet1"))
+    Dim tbl1 As New table
+    r = tbl1.import(Sheets("Sheet1"))
+    Dim tbl2 As New table
+    r = tbl2.import(Sheets("Sheet2"))
     
-    r = tbl.export(Sheets("Sheet2").Range("A1"))
+    Dim tbl As table
+    Set tbl = tbl1.zip(tbl2)
+    r = tbl.export(Sheets("Sheet3").Range("A1"))
     
 End Function

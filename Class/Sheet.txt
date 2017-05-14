@@ -49,9 +49,10 @@ End Property
 ' @param rowNo: Long 取得する値コレクションの行
 ' @return Collection 指定した行の値コレクション
 Public Function getRowCollection(rowNo As Long) As collection
+    Dim f As New Factory
     Dim c As New collection
     For i = 1 To getColumnCount()
-        c.add s.Cells(rowNo, i).value
+        c.add f.newElement(s.Cells(rowNo, i).value)
     Next
     Set getRowCollection = c
 End Function

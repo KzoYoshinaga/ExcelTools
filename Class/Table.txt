@@ -1,16 +1,11 @@
 ' 可変オブジェクト
 
 ' メンバー ***************************
-Private header As New Tuple
 Private tuples As New Tuple
 
 ' イニシャライザ *********************
-' ヘッダセット
-Public Property Let setHeader(h As Tuple)
-    Set header = h
-End Property
 ' タプルセット
-Public Property Let setTuples(ts As collection)
+Public Property Let setTuples(ts As Tuple)
     Set tuples = ts
 End Property
 
@@ -35,13 +30,13 @@ End Property
 Public Property Get export(r As Range)
     Dim i As Long
     Dim j As Long
-    r = tuples.getValue(1)
-    Dim t
+    Dim t As Tuple
     For i = 1 To tuples.count()
-        'r = tuples.getValue(i)
-        'For j = 1 To t.count()
-        '    r.Offset(i - 1, j - 1).value = t.getValue(j)
-        'Next
+        Set t = tuples.getValue(i)
+        For j = 1 To t.count()
+            Debug.Print t.getValue(j).getValue
+            r.Offset(i - 1, j - 1).value = t.getValue(j).getValue
+        Next
     Next
 End Function
 
@@ -56,8 +51,14 @@ Public Property Get splitRow(rowNo As Integer)
 End Property
 
 ' 行交互マージ
-Public Property Get zip(that As table)
+Public Property Get zip(that As table) As table
+    Dim f As New Factory
+    Dim t As Tuple
+    Set t = tuples.zip(that.getTuples())
     
+    Debug.Print t.count
+    
+    Set zip = f.newTable(t)
 End Property
 
 
@@ -66,4 +67,8 @@ Public Property Get pile(that As table)
 
 End Property
 
+' タプタプ
+Public Property Get getTuples() As Tuple
+    Set getTuples = tuples
+End Property
 

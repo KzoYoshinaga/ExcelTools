@@ -3,12 +3,20 @@ Private Function test()
     Sheets("pile").Cells.Clear
     Sheets("zip").Cells.Clear
     Sheets("test").Cells.Clear
-    
+
     Dim t As New table
-    
-    Call t.import(Sheets("A")).skipPile(t.import(Sheets("B")), 4).export(Sheets("pile").Range("A1")).terminate
-    
-    Call t.import(Sheets("A")).skipZip(t.import(Sheets("B")), 2).export(Sheets("zip").Range("A1")).terminate
-    
-    
+
+    Call t. _
+          import(Sheets("A")). _
+          skipPile(t.import(Sheets("B")), 4). _
+          export(Sheets("pile").Range("A1")). _
+          terminate
+
+    Call t. _
+          import(Sheets("A")). _
+          skipZip(t.import(Sheets("B")), 2). _
+          export(Sheets("zip").Range("A1")). _
+          terminate
+
+
 End Function

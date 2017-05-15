@@ -1,13 +1,13 @@
 ' Tuple **********************************************
 
-' V‚µ‚¢ƒCƒ“ƒXƒ^ƒ“ƒX‚ª¶¬‚³‚ê‚é‚±‚Æ
+' æ–°ã—ã„ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãŒç”Ÿæˆã•ã‚Œã‚‹ã“ã¨
 Function createNewInstance()
     ' SetTestName
     testName = "createNewInstance()"
 
     ' Arrange
     Dim values As New collection
-    values.add "a"
+    values.add newElement("a")
      
     ' Do
     Dim t As New Tuple
@@ -20,23 +20,21 @@ End Function
 
 ' trim() ***************************************************
 
-' (0, 0)”ÍˆÍ‚Ì—v‘f‚ª”²‚«o‚¹‚È‚¢‚±‚Æ
+' (0, 0)ç¯„å›²ã®è¦ç´ ãŒæŠœãå‡ºã›ãªã„ã“ã¨
 Private Function trimNoValueWhenFrom0Last0()
     ' SetTestName
     testName = "trimNoValueWhenFrom0Last0()"
 
     ' Arrange
-    Dim f As New Factory
-    
     Dim values As New collection
-    values.add "a"
-    values.add "b"
+    values.add newElement("a")
+    values.add newElement("b")
     
     Dim t As Tuple
-    Set t = f.newTuple(values)
+    Set t = newTuple(values)
     
     Dim s As Selection
-    Set s = f.newSelection(0, 0)
+    Set s = newSelection(0, 0)
      
     ' Do
     Set t = t.trim(s)
@@ -46,23 +44,21 @@ Private Function trimNoValueWhenFrom0Last0()
     verify result, testName
 End Function
 
-' —v‘f‚ğˆêŒ”²‚«o‚¹‚é‚±‚Æ
+' è¦ç´ ã‚’ä¸€ä»¶æŠœãå‡ºã›ã‚‹ã“ã¨
 Private Function trim1Value()
     ' SetTestName
     testName = "trim1Value()"
 
     ' Arrange
-    Dim f As New Factory
-      
     Dim values As New collection
-    values.add "a"
-    values.add "b"
+    values.add newElement("a")
+    values.add newElement("b")
      
     Dim t As Tuple
-    Set t = f.newTuple(values)
+    Set t = newTuple(values)
     
     Dim s As Selection
-    Set s = f.newSelection(1, 1)
+    Set s = newSelection(1, 1)
      
     ' Do
     Set t = t.trim(s)
@@ -72,24 +68,22 @@ Private Function trim1Value()
     verify result, testName
 End Function
 
-' —v‘f‚ğ•¡”Œ”²‚«o‚¹‚é‚±‚Æ
+' è¦ç´ ã‚’è¤‡æ•°ä»¶æŠœãå‡ºã›ã‚‹ã“ã¨
 Private Function trimValues()
     ' SetTestName
     testName = "trimValues()"
 
     ' Arrange
-    Dim f As New Factory
-    
     Dim values As New collection
-    values.add "a"
-    values.add "b"
-    values.add "c"
+    values.add newElement("a")
+    values.add newElement("b")
+    values.add newElement("c")
      
     Dim t As Tuple
-    Set t = f.newTuple(values)
+    Set t = newTuple(values)
     
     Dim s As Selection
-    Set s = f.newSelection(1, 2)
+    Set s = newSelection(1, 2)
      
     ' Do
     Set t = t.trim(s)
@@ -99,25 +93,23 @@ Private Function trimValues()
     verify result, testName
 End Function
 
-' ƒ^ƒvƒ‹ŠOifrom, last ‚Æ‚à‚Écount ‚æ‚è‘å‚«‚¢j”ÍˆÍ‚ğw’è‚·‚é‚Æ‹ó‚Ìƒ^ƒvƒ‹‚ª‹A‚é
+' ã‚¿ãƒ—ãƒ«å¤–ï¼ˆfrom, last ã¨ã‚‚ã«count ã‚ˆã‚Šå¤§ãã„ï¼‰ç¯„å›²ã‚’æŒ‡å®šã™ã‚‹ã¨ç©ºã®ã‚¿ãƒ—ãƒ«ãŒå¸°ã‚‹
 Private Function trimEmptyTupleWhenFromAndLastGreaterThanCount()
     ' SetTestName
     testName = "trimEmptyTupleWhenFromAndLastGreaterThanCount()"
 
     ' Arrange
-    Dim f As New Factory
-    
     Dim values As New collection
-    values.add "a"
-    values.add "b"
-    values.add "c"
-    values.add "d"
+    values.add newElement("a")
+    values.add newElement("b")
+    values.add newElement("c")
+    values.add newElement("d")
      
     Dim t As Tuple
-    Set t = f.newTuple(values)
+    Set t = newTuple(values)
     
     Dim s As Selection
-    Set s = f.newSelection(5, 5)
+    Set s = newSelection(5, 5)
      
     ' Do
     Set t = t.trim(s)
@@ -129,17 +121,17 @@ End Function
 
 ' split() ***************************************************
 
-' —v‘f‚ª2‚Â‚É•ªŠ„‚³‚ê‚é‚±‚Æ
+' è¦ç´ ãŒ2ã¤ã«åˆ†å‰²ã•ã‚Œã‚‹ã“ã¨
 Private Function split2TuplesWhenInsideCount()
     ' SetTestName
     testName = "split2TuplesWhenNoInsideCount()"
     
     ' Arrange
     Dim values As New collection
-    values.add "a"
-    values.add "b"
-    values.add "c"
-    values.add "d"
+    values.add newElement("a")
+    values.add newElement("b")
+    values.add newElement("c")
+    values.add newElement("d")
      
     Dim t As New Tuple
     t.setValues = values
@@ -153,17 +145,17 @@ Private Function split2TuplesWhenInsideCount()
     verify result, testName
 End Function
 
-' Œã•û‚ª‹ó—v‘f‚É‚È‚é‚±‚Æ
+' å¾Œæ–¹ãŒç©ºè¦ç´ ã«ãªã‚‹ã“ã¨
 Private Function rightTuplesEmptyWhenLargerCount()
     ' SetTestName
     testName = "rightTuplesEmptyWhenLargerCount()"
     
     ' Arrange
     Dim values As New collection
-    values.add "a"
-    values.add "b"
-    values.add "c"
-    values.add "d"
+    values.add newElement("a")
+    values.add newElement("b")
+    values.add newElement("c")
+    values.add newElement("d")
      
     Dim t As New Tuple
     t.setValues = values
@@ -177,17 +169,17 @@ Private Function rightTuplesEmptyWhenLargerCount()
     verify result, testName
 End Function
 
-' ‘O•û‚ª‹ó—v‘f‚É‚È‚é‚±‚Æ
+' å‰æ–¹ãŒç©ºè¦ç´ ã«ãªã‚‹ã“ã¨
 Private Function leftTuplesEmptyWhenLessCount()
     ' SetTestName
     testName = "leftTuplesEmptyWhenLessCount()"
     
     ' Arrange
     Dim values As New collection
-    values.add "a"
-    values.add "b"
-    values.add "c"
-    values.add "d"
+    values.add newElement("a")
+    values.add newElement("b")
+    values.add newElement("c")
+    values.add newElement("d")
      
     Dim t As New Tuple
     t.setValues = values
@@ -203,22 +195,22 @@ End Function
 
 ' insert() ************************************************************
 
-' ˆÚ“®æ‚É1‚æ‚è¬‚³‚¢’l‚ğw’è‚µ‚½ê‡Aæ“ª‚É‘}“ü‚³‚ê‚é‚±‚Æ
+' ç§»å‹•å…ˆã«1ã‚ˆã‚Šå°ã•ã„å€¤ã‚’æŒ‡å®šã—ãŸå ´åˆã€å…ˆé ­ã«æŒ¿å…¥ã•ã‚Œã‚‹ã“ã¨
 Private Function insertToTopWhenDestLessThan1()
     ' SetTestName
     testName = "insertToTopWhenDestLessThan1()"
     
     ' Arrange
     Dim values1 As New collection
-    values1.add "1"
-    values1.add "2"
-    values1.add "3"
-    values1.add "4"
-    values1.add "5"
+    values1.add newElement("1")
+    values1.add newElement("2")
+    values1.add newElement("3")
+    values1.add newElement("4")
+    values1.add newElement("5")
     
     Dim values2 As New collection
-    values2.add "a"
-    values2.add "b"
+    values2.add newElement("a")
+    values2.add newElement("b")
      
     Dim t1 As New Tuple
     t1.setValues = values1
@@ -235,22 +227,22 @@ Private Function insertToTopWhenDestLessThan1()
     verify result, testName
 End Function
 
-' ˆÚ“®æ‚É1‚ğw’è‚µ‚½ê‡Aæ“ª‚É‘}“ü‚³‚ê‚é‚±‚Æ
+' ç§»å‹•å…ˆã«1ã‚’æŒ‡å®šã—ãŸå ´åˆã€å…ˆé ­ã«æŒ¿å…¥ã•ã‚Œã‚‹ã“ã¨
 Function insertToTopWhenDestEquals1()
     ' SetTestName
     testName = "insertToTopWhenDestEquals1()"
     
     ' Arrange
     Dim values1 As New collection
-    values1.add "1"
-    values1.add "2"
-    values1.add "3"
-    values1.add "4"
-    values1.add "5"
+    values1.add newElement("1")
+    values1.add newElement("2")
+    values1.add newElement("3")
+    values1.add newElement("4")
+    values1.add newElement("5")
     
     Dim values2 As New collection
-    values2.add "a"
-    values2.add "b"
+    values2.add newElement("a")
+    values2.add newElement("b")
      
     Dim t1 As New Tuple
     t1.setValues = values1
@@ -267,22 +259,22 @@ Function insertToTopWhenDestEquals1()
     verify result, testName
 End Function
 
-' ˆÚ“®æ‚É1‚æ‚è‘å‚«‚­Aƒ^ƒvƒ‹ƒTƒCƒY‚æ‚è¬‚³‚¢’l‚ğw’è‚µ‚½ê‡Aw’èˆÊ’u‚É‘}“ü‚³‚ê‚é‚±‚Æ
+' ç§»å‹•å…ˆã«1ã‚ˆã‚Šå¤§ããã€ã‚¿ãƒ—ãƒ«ã‚µã‚¤ã‚ºã‚ˆã‚Šå°ã•ã„å€¤ã‚’æŒ‡å®šã—ãŸå ´åˆã€æŒ‡å®šä½ç½®ã«æŒ¿å…¥ã•ã‚Œã‚‹ã“ã¨
 Private Function insertToDestWhenDestWasMiddleOfTuple()
     ' SetTestName
     testName = "insertToDestWhenDestWasMiddleOfTuple()"
     
     ' Arrange
     Dim values1 As New collection
-    values1.add "1"
-    values1.add "2"
-    values1.add "3"
-    values1.add "4"
-    values1.add "5"
+    values1.add newElement("1")
+    values1.add newElement("2")
+    values1.add newElement("3")
+    values1.add newElement("4")
+    values1.add newElement("5")
     
     Dim values2 As New collection
-    values2.add "a"
-    values2.add "b"
+    values2.add newElement("a")
+    values2.add newElement("b")
      
     Dim t1 As New Tuple
     t1.setValues = values1
@@ -299,22 +291,22 @@ Private Function insertToDestWhenDestWasMiddleOfTuple()
     verify result, testName
 End Function
 
-' ˆÚ“®æ‚Éƒ^ƒvƒ‹ƒTƒCƒY‚ğw’è‚µ‚½ê‡AÅI—ñ‚æ‚è1¬‚³‚¢—ñ‚É‘}“ü‚³‚ê‚é‚±‚Æ
+' ç§»å‹•å…ˆã«ã‚¿ãƒ—ãƒ«ã‚µã‚¤ã‚ºã‚’æŒ‡å®šã—ãŸå ´åˆã€æœ€çµ‚åˆ—ã‚ˆã‚Š1å°ã•ã„åˆ—ã«æŒ¿å…¥ã•ã‚Œã‚‹ã“ã¨
 Function insertToPreLastWhenDestEqualsLast()
     ' SetTestName
     testName = "insertToPreLastWhenDestEqualsLast()"
     
     ' Arrange
     Dim values1 As New collection
-    values1.add "1"
-    values1.add "2"
-    values1.add "3"
-    values1.add "4"
-    values1.add "5"
+    values1.add newElement("1")
+    values1.add newElement("2")
+    values1.add newElement("3")
+    values1.add newElement("4")
+    values1.add newElement("5")
     
     Dim values2 As New collection
-    values2.add "a"
-    values2.add "b"
+    values2.add newElement("a")
+    values2.add newElement("b")
      
     Dim t1 As New Tuple
     t1.setValues = values1
@@ -331,22 +323,22 @@ Function insertToPreLastWhenDestEqualsLast()
     verify result, testName
 End Function
 
-' ˆÚ“®æ‚Éƒ^ƒvƒ‹ƒTƒCƒY‚æ‚è‘å‚«‚È’l‚ğw’è‚µ‚½ê‡AÅI—ñ‚É‘}“üiƒ}[ƒWj‚³‚ê‚é‚±‚Æ
+' ç§»å‹•å…ˆã«ã‚¿ãƒ—ãƒ«ã‚µã‚¤ã‚ºã‚ˆã‚Šå¤§ããªå€¤ã‚’æŒ‡å®šã—ãŸå ´åˆã€æœ€çµ‚åˆ—ã«æŒ¿å…¥ï¼ˆãƒãƒ¼ã‚¸ï¼‰ã•ã‚Œã‚‹ã“ã¨
 Function insertToLastWhenDestGreaterThanLast()
     ' SetTestName
     testName = "insertToLastWhenDestGreaterThanLast()"
     
     ' Arrange
     Dim values1 As New collection
-    values1.add "1"
-    values1.add "2"
-    values1.add "3"
-    values1.add "4"
-    values1.add "5"
+    values1.add newElement("1")
+    values1.add newElement("2")
+    values1.add newElement("3")
+    values1.add newElement("4")
+    values1.add newElement("5")
     
     Dim values2 As New collection
-    values2.add "a"
-    values2.add "b"
+    values2.add newElement("a")
+    values2.add newElement("b")
      
     Dim t1 As New Tuple
     t1.setValues = values1
@@ -365,72 +357,66 @@ End Function
 
 ' remove() *********************************************
 
-' —v‘f‚ªˆêŒíœ‚Å‚«‚é‚±‚Æ
+' è¦ç´ ãŒä¸€ä»¶å‰Šé™¤ã§ãã‚‹ã“ã¨
 Private Function removeValue()
     ' SetTestName
     testName = "removeValue()"
 
     ' Arrange
     Dim values As New collection
-    values.add "a"
-    values.add "b"
+    values.add newElement("a")
+    values.add newElement("b")
      
     Dim t As New Tuple
     t.setValues = values
     
-    Dim f As New Factory
-    
     ' Do
-    Set t = t.remove(f.newSelection(1, 1))
+    Set t = t.remove(newSelection(1, 1))
     
     ' Verifivation
     result = equals(t.toString, "Tuple(b)")
     verify result, testName
 End Function
 
-' —v‘f‚ª•¡”Œíœ‚Å‚«‚é‚±‚Æ
+' è¦ç´ ãŒè¤‡æ•°ä»¶å‰Šé™¤ã§ãã‚‹ã“ã¨
 Private Function removeValues()
     ' SetTestName
     testName = "removeValues()"
 
     ' Arrange
     Dim values As New collection
-    values.add "a"
-    values.add "b"
-    values.add "c"
+    values.add newElement("a")
+    values.add newElement("b")
+    values.add newElement("c")
      
     Dim t As New Tuple
     t.setValues = values
     
-    Dim f As New Factory
-    
     ' Do
-    Set t = t.remove(f.newSelection(1, 2))
+    Set t = t.remove(newSelection(1, 2))
     
     ' Verifivation
     result = equals(t.toString, "Tuple(c)")
     verify result, testName
 End Function
 
-' —v‘f”ˆÈã‚ÌŒ”‚ğw’è‚·‚é‚ÆAŠJnˆÊ’uˆÈ~‚Ì‘SŒ‚ªíœ‚³‚ê‚é
+' è¦ç´ æ•°ä»¥ä¸Šã®ä»¶æ•°ã‚’æŒ‡å®šã™ã‚‹ã¨ã€é–‹å§‹ä½ç½®ä»¥é™ã®å…¨ä»¶ãŒå‰Šé™¤ã•ã‚Œã‚‹
 Private Function removeAllAfterFrom()
     ' SetTestName
     testName = "canRemoveAllAfterFrom()"
 
     ' Arrange
     Dim values As New collection
-    values.add "a"
-    values.add "b"
-    values.add "c"
-    values.add "d"
-     
-    Dim f As New Factory
-    
+    values.add newElement("a")
+    values.add newElement("b")
+    values.add newElement("c")
+    values.add newElement("d")
+  
     Dim t As New Tuple
     t.setValues = values
     
     ' Do
-    Set t = t.remove(f.newSelection(2, 100))
+    Set t = t.remove(newSelection(2, 100))
     
     ' Verifivation
     result = equals(t.toString, "Tuple(a)")
@@ -440,116 +426,108 @@ End Function
 
 ' move() ***********************************************
 
-' ˆÚ“®æ‚ª1‚æ‚è¬‚³‚¢ê‡æ“ª‚ÉˆÚ“®‚³‚ê‚é
+' ç§»å‹•å…ˆãŒ1ã‚ˆã‚Šå°ã•ã„å ´åˆå…ˆé ­ã«ç§»å‹•ã•ã‚Œã‚‹
 Private Function moveToTopWhenDestLessThan1()
     'SetTestName
     testName = "moveToTopWhenDestLessThan1()"
     
     ' Arrange
     Dim values As New collection
-    values.add "1"
-    values.add "2"
-    values.add "3"
-    values.add "4"
-    values.add "5"
-    values.add "6"
-    values.add "7"
-    values.add "8"
-    
-    Dim f As New Factory
+    values.add newElement("1")
+    values.add newElement("2")
+    values.add newElement("3")
+    values.add newElement("4")
+    values.add newElement("5")
+    values.add newElement("6")
+    values.add newElement("7")
+    values.add newElement("8")
     
     Dim t As Tuple
-    Set t = f.newTuple(values)
+    Set t = newTuple(values)
     
     ' Do
-    Set t = t.move(s:=f.newSelection(2, 3), dest:=-1)
+    Set t = t.move(s:=newSelection(2, 3), dest:=-1)
         
     ' Verification
     result = equals(t.toString, "Tuple(2, 3, 1, 4, 5, 6, 7, 8)")
     verify result, testName
 End Function
 
-' ˆÚ“®æ‚ª1‚Ìê‡æ“ª‚ÉˆÚ“®‚³‚ê‚é
+' ç§»å‹•å…ˆãŒ1ã®å ´åˆå…ˆé ­ã«ç§»å‹•ã•ã‚Œã‚‹
 Private Function moveToTopWhenDestEquals1()
     'SetTestName
     testName = "moveToTopWhenDestEquals1()"
     
     ' Arrange
     Dim values As New collection
-    values.add "1"
-    values.add "2"
-    values.add "3"
-    values.add "4"
-    values.add "5"
-    values.add "6"
-    values.add "7"
-    values.add "8"
-    
-    Dim f As New Factory
-    
+    values.add newElement("1")
+    values.add newElement("2")
+    values.add newElement("3")
+    values.add newElement("4")
+    values.add newElement("5")
+    values.add newElement("6")
+    values.add newElement("7")
+    values.add newElement("8")
+
     Dim t As Tuple
-    Set t = f.newTuple(values)
+    Set t = newTuple(values)
     
     ' Do
-    Set t = t.move(s:=f.newSelection(2, 3), dest:=1)
+    Set t = t.move(s:=newSelection(2, 3), dest:=1)
     
     ' Verification
     result = equals(t.toString, "Tuple(2, 3, 1, 4, 5, 6, 7, 8)")
     verify result, testName
 End Function
 
-' ˆÚ“®æ‚ª‘I‘ğ”ÍˆÍ“à‚È‚ç‚ÎˆÚ“®‚µ‚È‚¢
+' ç§»å‹•å…ˆãŒé¸æŠç¯„å›²å†…ãªã‚‰ã°ç§»å‹•ã—ãªã„
 Private Function moveSamePlaceWhenDestInsideSelection()
     'SetTestName
     testName = "moveSamePlaceWhenDestInsideSelection()"
     
     ' Arrange
     Dim values As New collection
-    values.add "1"
-    values.add "2"
-    values.add "3"
-    values.add "4"
-    values.add "5"
-    values.add "6"
-    values.add "7"
-    values.add "8"
-    
-    Dim f As New Factory
-    
+    values.add newElement("1")
+    values.add newElement("2")
+    values.add newElement("3")
+    values.add newElement("4")
+    values.add newElement("5")
+    values.add newElement("6")
+    values.add newElement("7")
+    values.add newElement("8")
+  
     Dim t As Tuple
-    Set t = f.newTuple(values)
+    Set t = newTuple(values)
     
     ' Do
-    Set t = t.move(s:=f.newSelection(2, 5), dest:=3)
+    Set t = t.move(s:=newSelection(2, 5), dest:=3)
     
     ' Verification
     result = equals(t.toString, "Tuple(1, 2, 3, 4, 5, 6, 7, 8)")
     verify result, testName
 End Function
 
-' ˆÚ“®æ‚ª(‘S‘ÌŒ”-‘I‘ğŒ”)‚æ‚è‘å‚«‚¢ê‡ÅI”Ô†‚ÉˆÚ“®‚³‚ê‚é
+' ç§»å‹•å…ˆãŒ(å…¨ä½“ä»¶æ•°-é¸æŠä»¶æ•°)ã‚ˆã‚Šå¤§ãã„å ´åˆæœ€çµ‚ç•ªå·ã«ç§»å‹•ã•ã‚Œã‚‹
 Private Function moveToLastWhenDestGreaterThanAndEqualsRemovedTupleCount()
     'SetTestName
     testName = "moveToLastWhenDestGreaterThanAndEqualsRemovedTupleCount()"
     
     ' Arrange
     Dim values As New collection
-    values.add "1"
-    values.add "2"
-    values.add "3"
-    values.add "4"
-    values.add "5"
-    values.add "6"
-    values.add "7"
-    values.add "8"
-    
-    Dim f As New Factory
-    
+    values.add newElement("1")
+    values.add newElement("2")
+    values.add newElement("3")
+    values.add newElement("4")
+    values.add newElement("5")
+    values.add newElement("6")
+    values.add newElement("7")
+    values.add newElement("8")
+  
     Dim t As Tuple
-    Set t = f.newTuple(values)
+    Set t = newTuple(values)
     
     ' Do
-    Set t = t.move(s:=f.newSelection(2, 3), dest:=9)
+    Set t = t.move(s:=newSelection(2, 3), dest:=9)
         
     ' Verification
     result = equals(t.toString, "Tuple(1, 4, 5, 6, 7, 8, 2, 3)")
@@ -558,35 +536,33 @@ End Function
 
 ' paste() *************************************************
 
-' ‘O•û“\‚è•t‚¯ˆÊ’u‚ğw’è‚µA”ÍˆÍ‚ªd‚È‚ç‚È‚¢ê‡“\‚è•t‚¯‚È‚µ
+' å‰æ–¹è²¼ã‚Šä»˜ã‘ä½ç½®ã‚’æŒ‡å®šã—ã€ç¯„å›²ãŒé‡ãªã‚‰ãªã„å ´åˆè²¼ã‚Šä»˜ã‘ãªã—
 Private Function pasteEmptyWhenSelectionForward()
     testName = "pasteEmptyWhenSelectionForward()"
     
     ' Arrange
-    Dim f As New Factory
-    
     Dim values1 As New collection
-    values1.add "1"
-    values1.add "2"
-    values1.add "3"
-    values1.add "4"
-    values1.add "5"
-    values1.add "6"
-    values1.add "7"
-    values1.add "8"
+    values1.add newElement("1")
+    values1.add newElement("2")
+    values1.add newElement("3")
+    values1.add newElement("4")
+    values1.add newElement("5")
+    values1.add newElement("6")
+    values1.add newElement("7")
+    values1.add newElement("8")
     
     Dim values2 As New collection
-    values2.add "a"
-    values2.add "b"
-    values2.add "c"
-    values2.add "d"
-    values2.add "e"
+    values2.add newElement("a")
+    values2.add newElement("b")
+    values2.add newElement("c")
+    values2.add newElement("d")
+    values2.add newElement("e")
     
     Dim this As Tuple
-    Set this = f.newTuple(values1)
+    Set this = newTuple(values1)
     
     Dim that As Tuple
-    Set that = f.newTuple(values2)
+    Set that = newTuple(values2)
     
     Dim r As Tuple
     Set r = this.paste(that, -8)
@@ -595,35 +571,33 @@ Private Function pasteEmptyWhenSelectionForward()
     verify result, testName
 End Function
 
-' Œã•û“\‚è•t‚¯ˆÊ’u‚ğw’è‚µA”ÍˆÍ‚ªd‚È‚ç‚È‚¢ê‡“\‚è•t‚¯‚È‚µ
+' å¾Œæ–¹è²¼ã‚Šä»˜ã‘ä½ç½®ã‚’æŒ‡å®šã—ã€ç¯„å›²ãŒé‡ãªã‚‰ãªã„å ´åˆè²¼ã‚Šä»˜ã‘ãªã—
 Private Function pasteEmptyWhenSelectionBackward()
     testName = "pasteEmptyWhenSelectionBackward()"
     
     ' Arrange
-    Dim f As New Factory
-    
     Dim values1 As New collection
-    values1.add "1"
-    values1.add "2"
-    values1.add "3"
-    values1.add "4"
-    values1.add "5"
-    values1.add "6"
-    values1.add "7"
-    values1.add "8"
+    values1.add newElement("1")
+    values1.add newElement("2")
+    values1.add newElement("3")
+    values1.add newElement("4")
+    values1.add newElement("5")
+    values1.add newElement("6")
+    values1.add newElement("7")
+    values1.add newElement("8")
     
     Dim values2 As New collection
-    values2.add "a"
-    values2.add "b"
-    values2.add "c"
-    values2.add "d"
-    values2.add "e"
+    values2.add newElement("a")
+    values2.add newElement("b")
+    values2.add newElement("c")
+    values2.add newElement("d")
+    values2.add newElement("e")
     
     Dim this As Tuple
-    Set this = f.newTuple(values1)
+    Set this = newTuple(values1)
     
     Dim that As Tuple
-    Set that = f.newTuple(values2)
+    Set that = newTuple(values2)
     
     Dim r As Tuple
     Set r = this.paste(that, 10)
@@ -632,35 +606,33 @@ Private Function pasteEmptyWhenSelectionBackward()
     verify result, testName
 End Function
 
-' ‘O•û“\‚è•t‚¯ˆÊ’u‚ğw’è‚µA”ÍˆÍ‚ªd‚È‚ç‚È‚¢ê‡“\‚è•t‚¯‚È‚µ(‹«ŠE)
+' å‰æ–¹è²¼ã‚Šä»˜ã‘ä½ç½®ã‚’æŒ‡å®šã—ã€ç¯„å›²ãŒé‡ãªã‚‰ãªã„å ´åˆè²¼ã‚Šä»˜ã‘ãªã—(å¢ƒç•Œ)
 Private Function pasteEmptyWhenSelectionForwardLimit()
     testName = "pasteEmptyWhenSelectionForwardLimit()"
     
     ' Arrange
-    Dim f As New Factory
-    
     Dim values1 As New collection
-    values1.add "1"
-    values1.add "2"
-    values1.add "3"
-    values1.add "4"
-    values1.add "5"
-    values1.add "6"
-    values1.add "7"
-    values1.add "8"
+    values1.add newElement("1")
+    values1.add newElement("2")
+    values1.add newElement("3")
+    values1.add newElement("4")
+    values1.add newElement("5")
+    values1.add newElement("6")
+    values1.add newElement("7")
+    values1.add newElement("8")
     
     Dim values2 As New collection
-    values2.add "a"
-    values2.add "b"
-    values2.add "c"
-    values2.add "d"
-    values2.add "e"
+    values2.add newElement("a")
+    values2.add newElement("b")
+    values2.add newElement("c")
+    values2.add newElement("d")
+    values2.add newElement("e")
     
     Dim this As Tuple
-    Set this = f.newTuple(values1)
+    Set this = newTuple(values1)
     
     Dim that As Tuple
-    Set that = f.newTuple(values2)
+    Set that = newTuple(values2)
     
     Dim r As Tuple
     Set r = this.paste(that, -4)
@@ -669,35 +641,33 @@ Private Function pasteEmptyWhenSelectionForwardLimit()
     verify result, testName
 End Function
 
-' Œã•û“\‚è•t‚¯ˆÊ’u‚ğw’è‚µA”ÍˆÍ‚ªd‚È‚ç‚È‚¢ê‡“\‚è•t‚¯‚È‚µ(‹«ŠE)
+' å¾Œæ–¹è²¼ã‚Šä»˜ã‘ä½ç½®ã‚’æŒ‡å®šã—ã€ç¯„å›²ãŒé‡ãªã‚‰ãªã„å ´åˆè²¼ã‚Šä»˜ã‘ãªã—(å¢ƒç•Œ)
 Private Function pasteEmptyWhenSelectionBackwardLimit()
     testName = "pasteEmptyWhenSelectionBackwardLimit()"
     
     ' Arrange
-    Dim f As New Factory
-    
     Dim values1 As New collection
-    values1.add "1"
-    values1.add "2"
-    values1.add "3"
-    values1.add "4"
-    values1.add "5"
-    values1.add "6"
-    values1.add "7"
-    values1.add "8"
+    values1.add newElement("1")
+    values1.add newElement("2")
+    values1.add newElement("3")
+    values1.add newElement("4")
+    values1.add newElement("5")
+    values1.add newElement("6")
+    values1.add newElement("7")
+    values1.add newElement("8")
     
     Dim values2 As New collection
-    values2.add "a"
-    values2.add "b"
-    values2.add "c"
-    values2.add "d"
-    values2.add "e"
+    values2.add newElement("a")
+    values2.add newElement("b")
+    values2.add newElement("c")
+    values2.add newElement("d")
+    values2.add newElement("e")
     
     Dim this As Tuple
-    Set this = f.newTuple(values1)
+    Set this = newTuple(values1)
     
     Dim that As Tuple
-    Set that = f.newTuple(values2)
+    Set that = newTuple(values2)
     
     Dim r As Tuple
     Set r = this.paste(that, 9)
@@ -706,35 +676,33 @@ Private Function pasteEmptyWhenSelectionBackwardLimit()
     verify result, testName
 End Function
 
-' ‘O•û“\‚è•t‚¯ˆÊ’u‚ğw’è‚µA”ÍˆÍ‚ªd‚È‚é•”•ª‚¾‚¯“\‚è•t‚¯‚³‚ê‚é‚±‚Æ
+' å‰æ–¹è²¼ã‚Šä»˜ã‘ä½ç½®ã‚’æŒ‡å®šã—ã€ç¯„å›²ãŒé‡ãªã‚‹éƒ¨åˆ†ã ã‘è²¼ã‚Šä»˜ã‘ã•ã‚Œã‚‹ã“ã¨
 Private Function pasteWhenSelectionForward()
     testName = "pasteWhenSelectionForward()"
     
     ' Arrange
-    Dim f As New Factory
-    
     Dim values1 As New collection
-    values1.add "1"
-    values1.add "2"
-    values1.add "3"
-    values1.add "4"
-    values1.add "5"
-    values1.add "6"
-    values1.add "7"
-    values1.add "8"
+    values1.add newElement("1")
+    values1.add newElement("2")
+    values1.add newElement("3")
+    values1.add newElement("4")
+    values1.add newElement("5")
+    values1.add newElement("6")
+    values1.add newElement("7")
+    values1.add newElement("8")
     
     Dim values2 As New collection
-    values2.add "a"
-    values2.add "b"
-    values2.add "c"
-    values2.add "d"
-    values2.add "e"
+    values2.add newElement("a")
+    values2.add newElement("b")
+    values2.add newElement("c")
+    values2.add newElement("d")
+    values2.add newElement("e")
     
     Dim this As Tuple
-    Set this = f.newTuple(values1)
+    Set this = newTuple(values1)
     
     Dim that As Tuple
-    Set that = f.newTuple(values2)
+    Set that = newTuple(values2)
     
     Dim r As Tuple
     Set r = this.paste(that, -2)
@@ -743,35 +711,33 @@ Private Function pasteWhenSelectionForward()
     verify result, testName
 End Function
 
-' Œã•û“\‚è•t‚¯ˆÊ’u‚ğw’è‚µA”ÍˆÍ‚ªd‚È‚é•”•ª‚¾‚¯“\‚è•t‚¯‚³‚ê‚é‚±‚Æ
+' å¾Œæ–¹è²¼ã‚Šä»˜ã‘ä½ç½®ã‚’æŒ‡å®šã—ã€ç¯„å›²ãŒé‡ãªã‚‹éƒ¨åˆ†ã ã‘è²¼ã‚Šä»˜ã‘ã•ã‚Œã‚‹ã“ã¨
 Private Function pasteWhenSelectionBackward()
     testName = "pasteWhenSelectionBackward()"
     
     ' Arrange
-    Dim f As New Factory
-    
     Dim values1 As New collection
-    values1.add "1"
-    values1.add "2"
-    values1.add "3"
-    values1.add "4"
-    values1.add "5"
-    values1.add "6"
-    values1.add "7"
-    values1.add "8"
+    values1.add newElement("1")
+    values1.add newElement("2")
+    values1.add newElement("3")
+    values1.add newElement("4")
+    values1.add newElement("5")
+    values1.add newElement("6")
+    values1.add newElement("7")
+    values1.add newElement("8")
     
     Dim values2 As New collection
-    values2.add "a"
-    values2.add "b"
-    values2.add "c"
-    values2.add "d"
-    values2.add "e"
+    values2.add newElement("a")
+    values2.add newElement("b")
+    values2.add newElement("c")
+    values2.add newElement("d")
+    values2.add newElement("e")
     
     Dim this As Tuple
-    Set this = f.newTuple(values1)
+    Set this = newTuple(values1)
     
     Dim that As Tuple
-    Set that = f.newTuple(values2)
+    Set that = newTuple(values2)
     
     Dim r As Tuple
     Set r = this.paste(that, 6)
@@ -780,35 +746,33 @@ Private Function pasteWhenSelectionBackward()
     verify result, testName
 End Function
 
-' “\‚è•t‚¯‘ÎÛ‚ª—Ìˆæ“à‚Éû‚Ü‚é‚Æ‚«A‚·‚×‚Ä‚Ì‘ÎÛ‚ª“\‚è•t‚¯‚³‚ê‚é‚±‚Æ
+' è²¼ã‚Šä»˜ã‘å¯¾è±¡ãŒé ˜åŸŸå†…ã«åã¾ã‚‹ã¨ãã€ã™ã¹ã¦ã®å¯¾è±¡ãŒè²¼ã‚Šä»˜ã‘ã•ã‚Œã‚‹ã“ã¨
 Private Function pasteWholeSelection()
     testName = "pasteWholeSelection()"
     
     ' Arrange
-    Dim f As New Factory
-    
     Dim values1 As New collection
-    values1.add "1"
-    values1.add "2"
-    values1.add "3"
-    values1.add "4"
-    values1.add "5"
-    values1.add "6"
-    values1.add "7"
-    values1.add "8"
+    values1.add newElement("1")
+    values1.add newElement("2")
+    values1.add newElement("3")
+    values1.add newElement("4")
+    values1.add newElement("5")
+    values1.add newElement("6")
+    values1.add newElement("7")
+    values1.add newElement("8")
     
     Dim values2 As New collection
-    values2.add "a"
-    values2.add "b"
-    values2.add "c"
-    values2.add "d"
-    values2.add "e"
+    values2.add newElement("a")
+    values2.add newElement("b")
+    values2.add newElement("c")
+    values2.add newElement("d")
+    values2.add newElement("e")
     
     Dim this As Tuple
-    Set this = f.newTuple(values1)
+    Set this = newTuple(values1)
     
     Dim that As Tuple
-    Set that = f.newTuple(values2)
+    Set that = newTuple(values2)
     
     Dim r As Tuple
     Set r = this.paste(that, 2)
@@ -817,114 +781,21 @@ Private Function pasteWholeSelection()
     verify result, testName
 End Function
 
-
-' zip() ***************************************************
-
-' “¯‚¶—v‘f”‚Ìƒ^ƒvƒ‹‚ªŒğŒİ‚Éƒ}[ƒW‚³‚ê‚é‚±‚Æ
-Private Function zipWith2SameSizeTupples()
-    ' SetTestName
-    testName = "zipWith2SameSizeTupples()"
-    
-    ' Arrange
-    Dim values1 As New collection
-    values1.add "a"
-    values1.add "c"
-    values1.add "e"
-    
-    Dim values2 As New collection
-    values2.add "b"
-    values2.add "d"
-    values2.add "f"
-     
-    Dim t1 As New Tuple
-    t1.setValues = values1
-    
-    Dim t2 As New Tuple
-    t2.setValues = values2
-    
-    ' Do
-    Dim t As Tuple
-    Set t = t1.zip(t2)
-    
-    ' Verification
-    result = equals(t.toString, "Tuple(a, b, c, d, e, f)")
-    verify result, testName
-End Function
-
-' Œ³ƒ^ƒvƒ‹‚Ì—v‘f”‚ªƒ}[ƒW‘ÎÛ‚æ‚è‚à­‚È‚¢ê‡AŒ³—v‘f”‚ÅØ‚è‹l‚ß‚ç‚ê‚é‚±‚Æ
-Private Function zipWithOriginSize()
-   ' SetTestName
-    testName = "zipWithOriginSize()"
-    
-    ' Arrange
-    Dim values1 As New collection
-    values1.add "a"
-    values1.add "c"
-    
-    Dim values2 As New collection
-    values2.add "b"
-    values2.add "d"
-    values2.add "f"
-     
-    Dim t1 As New Tuple
-    t1.setValues = values1
-    
-    Dim t2 As New Tuple
-    t2.setValues = values2
-    
-    ' Do
-    Dim t As Tuple
-    Set t = t1.zip(t2)
-    
-    ' Verification
-    result = equals(t.toString, "Tuple(a, b, c, d)")
-    verify result, testName
-End Function
-
-' ƒ}[ƒW‘ÎÛƒ^ƒvƒ‹‚Ì—v‘f”‚ªŒ³ƒ^ƒvƒ‹‚æ‚è‚à­‚È‚¢ê‡A‘ÎÛ—v‘f”‚ÅØ‚è‹l‚ß‚ç‚ê‚é‚±‚Æ
-Private Function zipWithObjectiveSize()
-    ' SetTestName
-    testName = "zipWithOppositSize()"
-    
-    ' Arrange
-    Dim values1 As New collection
-    values1.add "a"
-    values1.add "c"
-    values1.add "e"
-    
-    Dim values2 As New collection
-    values2.add "b"
-     
-    Dim t1 As New Tuple
-    t1.setValues = values1
-    
-    Dim t2 As New Tuple
-    t2.setValues = values2
-    
-    ' Do
-    Dim t As Tuple
-    Set t = t1.zip(t2)
-    
-    ' Verification
-    result = equals(t.toString, "Tuple(a, b)")
-    verify result, testName
-End Function
-
 ' marge() ****************************************
 
-' Œ³A‘ÎÛ‚Æ‚à‚É‹ó‚Å‚È‚¢‚Æ‚«A‘ÎÛ‚ªƒ}[ƒW‚³‚ê‚é‚±‚Æ
+' å…ƒã€å¯¾è±¡ã¨ã‚‚ã«ç©ºã§ãªã„ã¨ãã€å¯¾è±¡ãŒãƒãƒ¼ã‚¸ã•ã‚Œã‚‹ã“ã¨
 Private Function margeWhenOriginAndOppositAreNotEmpty()
     ' SetTestName
     testName = "margeWhenOriginAndOppositAreNotEmpty()"
     
     ' Arrange
     Dim values1 As New collection
-    values1.add "a"
-    values1.add "b"
-    values1.add "c"
+    values1.add newElement("a")
+    values1.add newElement("b")
+    values1.add newElement("c")
     
     Dim values2 As New collection
-    values2.add "d"
+    values2.add newElement("d")
      
     Dim t1 As New Tuple
     t1.setValues = values1
@@ -941,7 +812,7 @@ Private Function margeWhenOriginAndOppositAreNotEmpty()
     verify result, testName
 End Function
 
-' Œ³‚ª‹ó‚Ì‚Æ‚«A‘ÎÛ‚ª‚Ì‚İ‚Ìƒ^ƒvƒ‹‚ª•Ô‚é‚±‚Æ
+' å…ƒãŒç©ºã®ã¨ãã€å¯¾è±¡ãŒã®ã¿ã®ã‚¿ãƒ—ãƒ«ãŒè¿”ã‚‹ã“ã¨
 Private Function margeReturnOppositeWhenOriginWasEmpty()
     ' SetTestName
     testName = "margeReturnOppositeWhenOriginWasEmpty()"
@@ -950,7 +821,7 @@ Private Function margeReturnOppositeWhenOriginWasEmpty()
     Dim values1 As New collection
     
     Dim values2 As New collection
-    values2.add "d"
+    values2.add newElement("d")
      
     Dim t1 As New Tuple
     t1.setValues = values1
@@ -968,16 +839,16 @@ Private Function margeReturnOppositeWhenOriginWasEmpty()
 End Function
 
 
-' ‘ÎÛ‚ª‹ó‚Ì‚Æ‚«AŒ³‚Ì‚İ‚Ìƒ^ƒvƒ‹‚ª•Ô‚³‚ê‚é‚±‚Æ
+' å¯¾è±¡ãŒç©ºã®ã¨ãã€å…ƒã®ã¿ã®ã‚¿ãƒ—ãƒ«ãŒè¿”ã•ã‚Œã‚‹ã“ã¨
 Private Function margeReturnOriginWhenOppositeWasEmpty()
     ' SetTestName
     testName = "margeReturnOriginWhenOppositeWasEmpty()"
     
     ' Arrange
     Dim values1 As New collection
-    values1.add "a"
-    values1.add "b"
-    values1.add "c"
+    values1.add newElement("a")
+    values1.add newElement("b")
+    values1.add newElement("c")
     
     Dim values2 As New collection
      
@@ -996,8 +867,265 @@ Private Function margeReturnOriginWhenOppositeWasEmpty()
     verify result, testName
 End Function
 
-' zip() ******************************************
+' zip() ***************************************************
 
+' åŒã˜è¦ç´ æ•°ã®ã‚¿ãƒ—ãƒ«ãŒäº¤äº’ã«ãƒãƒ¼ã‚¸ã•ã‚Œã‚‹ã“ã¨
+Private Function zipWith2SameSizeTupples()
+    ' SetTestName
+    testName = "zipWith2SameSizeTupples()"
+    
+    ' Arrange
+    Dim values1 As New collection
+    values1.add newElement("a")
+    values1.add newElement("c")
+    values1.add newElement("e")
+    
+    Dim values2 As New collection
+    values2.add newElement("b")
+    values2.add newElement("d")
+    values2.add newElement("f")
+     
+    Dim t1 As New Tuple
+    t1.setValues = values1
+    
+    Dim t2 As New Tuple
+    t2.setValues = values2
+    
+    ' Do
+    Dim t As Tuple
+    Set t = t1.zip(t2)
+    
+    ' Verification
+    result = equals(t.toString, "Tuple(a, b, c, d, e, f)")
+    verify result, testName
+End Function
+
+' å…ƒã‚¿ãƒ—ãƒ«ã®è¦ç´ æ•°ãŒãƒãƒ¼ã‚¸å¯¾è±¡ã‚ˆã‚Šã‚‚å°‘ãªã„å ´åˆã€å…ƒè¦ç´ æ•°ã§åˆ‡ã‚Šè©°ã‚ã‚‰ã‚Œã‚‹ã“ã¨
+Private Function zipWithOriginSize()
+   ' SetTestName
+    testName = "zipWithOriginSize()"
+    
+    ' Arrange
+    Dim values1 As New collection
+    values1.add newElement("a")
+    values1.add newElement("c")
+    
+    Dim values2 As New collection
+    values2.add newElement("b")
+    values2.add newElement("d")
+    values2.add newElement("f")
+     
+    Dim t1 As New Tuple
+    t1.setValues = values1
+    
+    Dim t2 As New Tuple
+    t2.setValues = values2
+    
+    ' Do
+    Dim t As Tuple
+    Set t = t1.zip(t2)
+    
+    ' Verification
+    result = equals(t.toString, "Tuple(a, b, c, d)")
+    verify result, testName
+End Function
+
+' ãƒãƒ¼ã‚¸å¯¾è±¡ã‚¿ãƒ—ãƒ«ã®è¦ç´ æ•°ãŒå…ƒã‚¿ãƒ—ãƒ«ã‚ˆã‚Šã‚‚å°‘ãªã„å ´åˆã€å¯¾è±¡è¦ç´ æ•°ã§åˆ‡ã‚Šè©°ã‚ã‚‰ã‚Œã‚‹ã“ã¨
+Private Function zipWithObjectiveSize()
+    ' SetTestName
+    testName = "zipWithOppositSize()"
+    
+    ' Arrange
+    Dim values1 As New collection
+    values1.add newElement("a")
+    values1.add newElement("b")
+    values1.add newElement("c")
+    
+    Dim values2 As New collection
+    values2.add newElement("b")
+     
+    Dim t1 As New Tuple
+    t1.setValues = values1
+    
+    Dim t2 As New Tuple
+    t2.setValues = values2
+    
+    ' Do
+    Dim t As Tuple
+    Set t = t1.zip(t2)
+    
+    ' Verification
+    result = equals(t.toString, "Tuple(a, b)")
+    verify result, testName
+End Function
+
+' skipZip ******************************************
+
+Private Function skipZipReturnOriginWhen0()
+    ' SetTestName
+    testName = "skipZipReturnOriginWhen0()"
+    
+    ' Arrange
+    Dim values1 As New collection
+    values1.add newElement("a")
+    values1.add newElement("b")
+    values1.add newElement("c")
+    values1.add newElement("d")
+    values1.add newElement("e")
+    values1.add newElement("f")
+    
+    Dim values2 As New collection
+    values2.add newElement("1")
+    values2.add newElement("2")
+    values2.add newElement("3")
+    values2.add newElement("4")
+     
+    Dim t1 As New Tuple
+    t1.setValues = values1
+    
+    Dim t2 As New Tuple
+    t2.setValues = values2
+    
+    ' Do
+    Dim t As Tuple
+    Set t = t1.skipZip(t2, 0)
+     
+    ' Verification
+    result = equals(t.toString, "Tuple(a, b, c, d, e, f)")
+    verify result, testName
+End Function
+
+Private Function skipZipWasSameResaltWhen1()
+    ' SetTestName
+    testName = "skipZipWasSameResaltWhen1()"
+    
+    ' Arrange
+    Dim values1 As New collection
+    values1.add newElement("a")
+    values1.add newElement("b")
+    values1.add newElement("c")
+    values1.add newElement("d")
+    values1.add newElement("e")
+    values1.add newElement("f")
+    
+    Dim values2 As New collection
+    values2.add newElement("1")
+    values2.add newElement("2")
+    values2.add newElement("3")
+    values2.add newElement("4")
+     
+    Dim t1 As New Tuple
+    t1.setValues = values1
+    
+    Dim t2 As New Tuple
+    t2.setValues = values2
+    
+    ' Do
+    Dim t As Tuple
+    Set t = t1.skipZip(t2, 1)
+          
+    ' Verification
+    result = equals(t.toString, "Tuple(a, 1, b, 2, c, 3, d, 4)")
+    verify result, testName
+End Function
+
+Private Function skipZipWhenGreaterThan2()
+    ' SetTestName
+    testName = "skipZipWhenGreaterThan2()"
+    
+    ' Arrange
+    Dim values1 As New collection
+    values1.add newElement("a")
+    values1.add newElement("b")
+    values1.add newElement("c")
+    values1.add newElement("d")
+    values1.add newElement("e")
+    values1.add newElement("f")
+    
+    Dim values2 As New collection
+    values2.add newElement("1")
+    values2.add newElement("2")
+    values2.add newElement("3")
+    values2.add newElement("4")
+     
+    Dim t1 As New Tuple
+    t1.setValues = values1
+    
+    Dim t2 As New Tuple
+    t2.setValues = values2
+    
+    ' Do
+    Dim t As Tuple
+    Set t = t1.skipZip(t2, 2)
+        
+    ' Verification
+    result = equals(t.toString, "Tuple(a, b, 1, c, d, 2, e, f, 3)")
+    verify result, testName
+End Function
+
+Private Function skipZipReturnOriginWhenOverOriginCount()
+     ' SetTestName
+    testName = "skipZipReturnOriginWhenOverOriginCount()"
+    
+    ' Arrange
+    Dim values1 As New collection
+    values1.add newElement("a")
+    values1.add newElement("b")
+    values1.add newElement("c")
+    values1.add newElement("d")
+    values1.add newElement("e")
+    values1.add newElement("f")
+    
+    Dim values2 As New collection
+    values2.add newElement("1")
+    values2.add newElement("2")
+    values2.add newElement("3")
+    values2.add newElement("4")
+     
+    Dim t1 As New Tuple
+    t1.setValues = values1
+    
+    Dim t2 As New Tuple
+    t2.setValues = values2
+    
+    ' Do
+    Dim t As Tuple
+    Set t = t1.skipZip(t2, 7)
+        
+    ' Verification
+    result = equals(t.toString, "Tuple(a, b, c, d, e, f)")
+    verify result, testName
+End Function
+
+' skipInsert() ******************************************
+
+Private Function skipInsertTest()
+     ' SetTestName
+    testName = "skipZipReturnOriginWhenOverOriginCount()"
+    
+    ' Arrange
+    Dim values1 As New collection
+    values1.add newElement("a")
+    values1.add newElement("b")
+    values1.add newElement("c")
+    values1.add newElement("d")
+    values1.add newElement("e")
+    values1.add newElement("f")
+    values1.add newElement("g")
+    
+    Dim t1 As New Tuple
+    t1.setValues = values1
+    
+    ' Do
+    Dim t As Tuple
+    Set t = t1.skipInsert(newElement("9"), 4)
+    
+    Debug.Print t.toString
+        
+    ' Verification
+    result = equals(t.toString, "Tuple(a, b, c, d, 9, e, f, g)")
+    verify result, testName
+End Function
 
 
 Function TupleTest()
@@ -1053,5 +1181,11 @@ Function TupleTest()
     zipWith2SameSizeTupples
     zipWithOriginSize
     zipWithObjectiveSize
+    
+    ' skipZip()
+    skipZipReturnOriginWhen0
+    skipZipWasSameResaltWhen1
+    skipZipWhenGreaterThan2
+    skipZipReturnOriginWhenOverOriginCount
     
 End Function

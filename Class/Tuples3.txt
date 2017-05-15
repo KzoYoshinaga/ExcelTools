@@ -1,9 +1,9 @@
-' ƒƒ“ƒo *****************************
+' ãƒ¡ãƒ³ãƒ *****************************
 Private left As New Tuple
 Private middle As New Tuple
 Private right As New Tuple
 
-' ƒCƒjƒVƒƒƒ‰ƒCƒU *********************
+' ã‚¤ãƒ‹ã‚·ãƒ£ãƒ©ã‚¤ã‚¶ *********************
 Public Property Let setLeft(l As Tuple)
     Set left = l
 End Property
@@ -16,7 +16,7 @@ Public Property Let setRight(r As Tuple)
     Set right = r
 End Property
 
-' ƒIƒuƒWƒFƒNƒg‹¤’Ê ********************
+' ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå…±é€š ********************
 Public Property Get toString()
     toString = "Tuples3(" & left.toString & ", " & middle.toString & ", " & right.toString & ")"
 End Property
@@ -29,7 +29,7 @@ Public Property Get equals(that As Tuple)
     End If
 End Property
 
-' ƒNƒGƒŠ *****************************
+' ã‚¯ã‚¨ãƒª *****************************
 
 Public Property Get getLeft() As Tuple
     Set getLeft = left.clone()

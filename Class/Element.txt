@@ -7,3 +7,16 @@ End Property
 Public Property Get getValue()
     getValue = v
 End Property
+
+' オブジェクト共通 ********************
+Public Property Get toString()
+    toString = "" & v
+End Property
+
+Public Property Get equals(that As Tuple)
+    If toString() = that.toString Then
+        equals = True
+    Else
+        equals = False
+    End If
+End Property

@@ -1,4 +1,4 @@
-' ƒwƒ‹ƒp ***************************
+' ãƒ˜ãƒ«ãƒ‘ ***************************
 Function equals(t1, t2)
     If t1 = t2 Then
         equals = True
@@ -42,13 +42,6 @@ Function middle(n1 As Long, n2 As Long, n3 As Long) As Long
     middle = r
 End Function
 
-Function newCollection(c As collection) As collection
-    Dim r As New collection
-    For Each v In c
-        r.add v
-    Next
-    Set newCollection = r
-End Function
 
 
 

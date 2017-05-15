@@ -1,33 +1,40 @@
-' ‰Â•ÏƒIƒuƒWƒFƒNƒg
+' å¯å¤‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
-' ƒƒ“ƒo[ ***************************
+' ãƒ¡ãƒ³ãƒãƒ¼ ***************************
 Private tuples As New Tuple
 
-' ƒCƒjƒVƒƒƒ‰ƒCƒU *********************
-' ƒ^ƒvƒ‹ƒZƒbƒg
+' ã‚¤ãƒ‹ã‚·ãƒ£ãƒ©ã‚¤ã‚¶ *********************
+' ã‚¿ãƒ—ãƒ«ã‚»ãƒƒãƒˆ
 Public Property Let setTuples(ts As Tuple)
     Set tuples = ts
 End Property
 
-' ƒNƒGƒŠ *****************************
+' ã‚¯ãƒ­ãƒ¼ãƒ³ **************************
+Public Property Get clone() As table
+    Dim r As New table
+    r.setTuples = tuples.clone()
+    Set clone = r
+End Property
 
-' ƒf[ƒ^ƒCƒ“ƒ|[ƒg
-' @param s: Worksheet ƒCƒ“ƒ|[ƒg‚·‚éƒe[ƒuƒ‹‚ªŠi”[‚³‚ê‚½ƒV[ƒg
-Public Property Get import(s As Worksheet)
-    Dim f As New Factory
+' ã‚¯ã‚¨ãƒª *****************************
+
+' ãƒ‡ãƒ¼ã‚¿ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
+' @param s: Worksheet ã‚¤ãƒ³ãƒãƒ¼ãƒˆã™ã‚‹ãƒ†ãƒ¼ãƒ–ãƒ«ãŒæ ¼ç´ã•ã‚ŒãŸã‚·ãƒ¼ãƒˆ
+Public Property Get import(s As Worksheet) As table
     Dim sh As sheet
-    Set sh = f.newSheet(s)
+    Set sh = newSheet(s)
     Dim c As New collection
     Dim i As Long
     For i = 1 To sh.getRowCount()
-        c.add f.newTuple(sh.getRowCollection(i))
+        c.add newTuple(sh.getRowCollection(i))
     Next
-    Set tuples = f.newTuple(c)
+    Set tuples = newTuple(c)
+    Set import = clone()
 End Property
 
-' ƒf[ƒ^ƒGƒNƒXƒ|[ƒg
-' @param r: Range ƒGƒNƒXƒ|[ƒg‚·‚éƒe[ƒuƒ‹‚ğ”z’u‚·‚éƒZƒ‹
-Public Property Get export(r As Range)
+' ãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ
+' @param r: Range ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆã™ã‚‹ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’é…ç½®ã™ã‚‹ã‚»ãƒ«
+Public Property Get export(r As Range) As table
     Dim i As Long
     Dim j As Long
     Dim t As Tuple
@@ -37,49 +44,133 @@ Public Property Get export(r As Range)
             r.Offset(i - 1, j - 1).value = t.getValue(j).getValue
         Next
     Next
-End Function
+    Set export = clone()
+End Property
 
-' s•ªŠ„
+' è¡Œåˆ†å‰²
 Public Property Get splitColumn(columnNo As Integer)
 
 End Property
 
-' —ñ•ªŠ„
+' åˆ—åˆ†å‰²
 Public Property Get splitRow(rowNo As Integer)
 
 End Property
 
-' sŒğŒİƒ}[ƒW
+' è¡Œäº¤äº’ãƒãƒ¼ã‚¸
 Public Property Get zip(that As table) As table
     Dim count As Long
-    count = less(getRowCount(), that.getRowCount())
-    Dim f As New Factory
+    count = less(rowCount(), that.rowCount())
     Dim c As New collection
     Dim i As Long
     For i = 1 To count
         c.add getTuple(i).zip(that.getTuple(i))
     Next
-    Set zip = f.newTable(f.newTuple(c))
+    Set zip = newTable(newTuple(c))
 End Property
 
+' è¡Œäº¤äº’ãƒãƒ¼ã‚¸ãƒªãƒãƒ¼ã‚¹
+Public Property Get zipR(that As table) As table
+    Set zipR = that.zip(clone())
+End Property
 
-' —ñŒğŒİƒ}[ƒW
+' ã‚¹ã‚­ãƒƒãƒ—è¡Œäº¤äº’ãƒãƒ¼ã‚¸
+Public Property Get skipZip(that As table, n As Long) As table
+    Dim count As Long
+    count = less(rowCount(), that.rowCount())
+    Dim c As New collection
+    Dim i As Long
+    For i = 1 To count
+        c.add getTuple(i).skipZip(that.getTuple(i), n)
+    Next
+    Set skipZip = newTable(newTuple(c))
+End Property
+
+' ã‚¹ã‚­ãƒƒãƒ—è¡Œäº¤äº’ãƒãƒ¼ã‚¸ãƒªãƒãƒ¼ã‚¹
+Public Property Get skipZipR(that As table, n As Long) As table
+    Set skipZipR = that.skipZip(clone(), n)
+End Property
+
+' åˆ—äº¤äº’ãƒãƒ¼ã‚¸
 Public Property Get pile(that As table) As table
-    Dim f As New Factory
-    Dim t As Tuple
-    Set t = tuples.zip(that.getTuples())
-    Set pile = f.newTable(t)
+    Set pile = newTable(tuples.zip(that.getTuples()))
 End Property
 
+' äº¤äº’ãƒãƒ¼ã‚¸ãƒªãƒãƒ¼ã‚¹
+Public Property Get pileR(that As table) As table
+    Set pileR = that.pile(clone())
+End Property
+
+' ã‚¹ã‚­ãƒƒãƒ—åˆ—äº¤äº’ãƒãƒ¼ã‚¸
+Public Property Get skipPile(that As table, n As Long) As table
+    Set skipPile = newTable(tuples.skipZip(that.getTuples(), n))
+End Property
+
+' ã‚¹ã‚­ãƒƒãƒ—åˆ—äº¤äº’ãƒãƒ¼ã‚¸ãƒªãƒãƒ¼ã‚¹
+Public Property Get skipPileR(that As table, n As Long) As table
+    Set skipPileR = that.skipPile(clone(), n)
+End Property
+
+' ä¸Š
+Public Property Get abave(that As table) As table
+    Set abave = newTable(getTuples().marge(that.getTuples()))
+End Property
+
+' ä¸‹
+Public Property Get under(that As table) As table
+    Set under = that.abave(clone())
+End Property
+
+' å·¦
+Public Property Get left(that As table) As table
+    Dim last As Long
+    last = less(rowCount(), that.rowCount())
+    Dim c As New collection
+    Dim i As Long
+    For i = 1 To last
+        c.add getTuple(i).marge(that.getTuple(i))
+    Next
+    If last = rowCount Then
+        For i = last + 1 To that.rowCount
+            c.add newTuple(newFilledCollection(newElement(""), columnCount())).marge(that.getTuple(i))
+        Next
+    ElseIf last = that.rowCount() Then
+        For i = last + 1 To rowCount
+            c.add getTuple(i).marge(newTuple(newFilledCollection(newElement(""), that.columnCount)))
+        Next
+    End If
+    
+    Set left = newTable(newTuple(c))
+End Property
+
+' å³
+Public Property Get right(that As table) As table
+    Set right = that.left(clone())
+End Property
+
+' ã‚¿ãƒ—
 Public Property Get getTuple(n As Long) As Tuple
     Set getTuple = tuples.getValue(n)
 End Property
 
-' ƒ^ƒvƒ^ƒv
+' ã‚¿ãƒ—ã‚¿ãƒ—
 Public Property Get getTuples() As Tuple
     Set getTuples = tuples
 End Property
 
-Public Property Get getRowCount() As Long
-    getRowCount = tuples.count()
+' ã‚«ãƒ©ãƒ æ•°
+Public Property Get columnCount() As Long
+    If tuples.count = 0 Then
+        columnCount = 0
+    Else
+        columnCount = getTuple(1).count()
+    End If
 End Property
+
+Public Property Get rowCount() As Long
+    rowCount = tuples.count()
+End Property
+
+Public Function terminate()
+End Function
+

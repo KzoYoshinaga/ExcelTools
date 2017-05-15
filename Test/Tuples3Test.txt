@@ -1,13 +1,13 @@
 ' Tuples3 **********************************************
 
-' V‚µ‚¢ƒCƒ“ƒXƒ^ƒ“ƒX‚ª¶¬‚³‚ê‚é‚±‚Æ
+' æ–°ã—ã„ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãŒç”Ÿæˆã•ã‚Œã‚‹ã“ã¨
 Private Function createNewInstance()
     ' SetTestName
     testName = "createNewInstance()"
 
     ' Arrange
     Dim values As New collection
-    values.add "a"
+    values.add newElement("a")
      
     Dim t1 As New Tuple
     t1.setValues = values
@@ -27,25 +27,23 @@ Private Function createNewInstance()
     verify result, testName
 End Function
 
-' ¶ƒ^ƒvƒ‹‚ªŽæ‚èo‚¹‚é‚±‚Æ
+' å·¦ã‚¿ãƒ—ãƒ«ãŒå–ã‚Šå‡ºã›ã‚‹ã“ã¨
 Private Function getLeft()
     ' SetTestName
     testName = "getLeft()"
 
     ' Arrange
-    Dim f As New Factory
-    
     Dim values1 As New collection
-    values1.add "a"
+    values1.add newElement("a")
     Dim values2 As New collection
-    values2.add "b"
+    values2.add newElement("b")
     Dim values3 As New collection
-    values3.add "c"
+    values3.add newElement("c")
     
     Dim ts3 As New Tuples3
-    ts3.setLeft = f.newTuple(values1)
-    ts3.setMiddle = f.newTuple(values2)
-    ts3.setRight = f.newTuple(values3)
+    ts3.setLeft = newTuple(values1)
+    ts3.setMiddle = newTuple(values2)
+    ts3.setRight = newTuple(values3)
    
     Dim r As Tuple
     Set r = ts3.getLeft
@@ -54,25 +52,23 @@ Private Function getLeft()
     result = equals(r.toString, "Tuple(a)")
     verify result, testName
 End Function
-' ’†ƒ^ƒvƒ‹‚ªŽæ‚èo‚¹‚é‚±‚Æ
+' ä¸­ã‚¿ãƒ—ãƒ«ãŒå–ã‚Šå‡ºã›ã‚‹ã“ã¨
 Private Function getMiddle()
     ' SetTestName
     testName = "getMiddle()"
 
     ' Arrange
-    Dim f As New Factory
-    
     Dim values1 As New collection
-    values1.add "a"
+    values1.add newElement("a")
     Dim values2 As New collection
-    values2.add "b"
+    values2.add newElement("b")
     Dim values3 As New collection
-    values3.add "c"
+    values3.add newElement("c")
     
     Dim ts3 As New Tuples3
-    ts3.setLeft = f.newTuple(values1)
-    ts3.setMiddle = f.newTuple(values2)
-    ts3.setRight = f.newTuple(values3)
+    ts3.setLeft = newTuple(values1)
+    ts3.setMiddle = newTuple(values2)
+    ts3.setRight = newTuple(values3)
    
     Dim r As Tuple
     Set r = ts3.getMiddle()
@@ -82,25 +78,23 @@ Private Function getMiddle()
     verify result, testName
 End Function
 
-' ‰Eƒ^ƒvƒ‹‚ªŽæ‚èo‚¹‚é‚±‚Æ
+' å³ã‚¿ãƒ—ãƒ«ãŒå–ã‚Šå‡ºã›ã‚‹ã“ã¨
 Private Function getRight()
     ' SetTestName
     testName = "getRight()"
 
     ' Arrange
-    Dim f As New Factory
-    
     Dim values1 As New collection
-    values1.add "a"
+    values1.add newElement("a")
     Dim values2 As New collection
-    values2.add "b"
+    values2.add newElement("b")
     Dim values3 As New collection
-    values3.add "c"
+    values3.add newElement("c")
     
     Dim ts3 As New Tuples3
-    ts3.setLeft = f.newTuple(values1)
-    ts3.setMiddle = f.newTuple(values2)
-    ts3.setRight = f.newTuple(values3)
+    ts3.setLeft = newTuple(values1)
+    ts3.setMiddle = newTuple(values2)
+    ts3.setRight = newTuple(values3)
    
     Dim r As Tuple
     Set r = ts3.getRight()
@@ -110,25 +104,23 @@ Private Function getRight()
     verify result, testName
 End Function
 
-' Œ‹‡‚³‚ê‚½ƒ^ƒvƒ‹‚ªŽæ‚èo‚¹‚é‚±‚Æ
+' çµåˆã•ã‚ŒãŸã‚¿ãƒ—ãƒ«ãŒå–ã‚Šå‡ºã›ã‚‹ã“ã¨
 Private Function marge()
     ' SetTestName
     testName = "marge()"
 
     ' Arrange
-    Dim f As New Factory
-    
     Dim values1 As New collection
-    values1.add "a"
+    values1.add newElement("a")
     Dim values2 As New collection
-    values2.add "b"
+    values2.add newElement("b")
     Dim values3 As New collection
-    values3.add "c"
+    values3.add newElement("c")
     
     Dim ts3 As New Tuples3
-    ts3.setLeft = f.newTuple(values1)
-    ts3.setMiddle = f.newTuple(values2)
-    ts3.setRight = f.newTuple(values3)
+    ts3.setLeft = newTuple(values1)
+    ts3.setMiddle = newTuple(values2)
+    ts3.setRight = newTuple(values3)
    
     Dim r As Tuple
     Set r = ts3.marge()

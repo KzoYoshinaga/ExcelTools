@@ -1,11 +1,14 @@
 Private Function test()
+
+    Sheets("pile").Cells.Clear
+    Sheets("zip").Cells.Clear
+    Sheets("test").Cells.Clear
     
-    Dim tbl1 As New table
-    r = tbl1.import(Sheets("A"))
-    Dim tbl2 As New table
-    r = tbl2.import(Sheets("B"))
+    Dim t As New table
     
-    r = tbl1.pile(tbl2).export(Sheets("pile").Range("A1"))
-    r = tbl1.zip(tbl2).export(Sheets("zip").Range("A1"))
+    Call t.import(Sheets("A")).skipPile(t.import(Sheets("B")), 4).export(Sheets("pile").Range("A1")).terminate
+    
+    Call t.import(Sheets("A")).skipZip(t.import(Sheets("B")), 2).export(Sheets("zip").Range("A1")).terminate
+    
     
 End Function

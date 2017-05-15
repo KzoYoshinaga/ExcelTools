@@ -1,13 +1,13 @@
-' ƒƒ“ƒo **********************************
+' ãƒ¡ãƒ³ãƒ **********************************
 Private s As Worksheet
 
 
-' ƒCƒjƒVƒƒƒ‰ƒCƒU *********************
+' ã‚¤ãƒ‹ã‚·ãƒ£ãƒ©ã‚¤ã‚¶ *********************
 Public Property Let setValues(sheet As Worksheet)
     Set s = sheet
 End Property
 
-' ƒIƒuƒWƒFƒNƒg‹¤’Ê ********************
+' ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå…±é€š ********************
 Public Property Get toString()
     toString = "Sheet(" & sheet.Name & ")"
 End Property
@@ -20,8 +20,8 @@ Public Property Get equals(that As Tuple)
     End If
 End Property
 
-' s”æ“¾
-' @return Long ƒV[ƒg‚Ìs”
+' è¡Œæ•°å–å¾—
+' @return Long ã‚·ãƒ¼ãƒˆã®è¡Œæ•°
 Public Property Get getRowCount() As Long
     If s.Range("A1").value = "" Then
         getRowCount = 0
@@ -32,8 +32,8 @@ Public Property Get getRowCount() As Long
     End If
 End Property
 
-' —ñ”æ“¾
-' @return Long ƒV[ƒg‚Ì—ñ”
+' åˆ—æ•°å–å¾—
+' @return Long ã‚·ãƒ¼ãƒˆã®åˆ—æ•°
 Public Property Get getColumnCount() As Long
     If s.Range("A1").value = "" Then
         getColumnCount = 0
@@ -45,14 +45,13 @@ Public Property Get getColumnCount() As Long
 End Property
 
 
-' w’è‚³‚ê‚½s‚Ì’l‚ÌƒRƒŒƒNƒVƒ‡ƒ“‚ğ•Ô‚·@=>@“Æ©ƒIƒuƒWƒFƒNƒg‚Åƒ‰ƒbƒv‚·‚é
-' @param rowNo: Long æ“¾‚·‚é’lƒRƒŒƒNƒVƒ‡ƒ“‚Ìs
-' @return Collection w’è‚µ‚½s‚Ì’lƒRƒŒƒNƒVƒ‡ƒ“
+' æŒ‡å®šã•ã‚ŒãŸè¡Œã®å€¤ã®ã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³ã‚’è¿”ã™ã€€=>ã€€ç‹¬è‡ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ãƒ©ãƒƒãƒ—ã™ã‚‹
+' @param rowNo: Long å–å¾—ã™ã‚‹å€¤ã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³ã®è¡Œ
+' @return Collection æŒ‡å®šã—ãŸè¡Œã®å€¤ã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³
 Public Function getRowCollection(rowNo As Long) As collection
-    Dim f As New Factory
     Dim c As New collection
     For i = 1 To getColumnCount()
-        c.add f.newElement(s.Cells(rowNo, i).value)
+        c.add newElement(s.Cells(rowNo, i).value)
     Next
     Set getRowCollection = c
 End Function

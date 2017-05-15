@@ -1,6 +1,6 @@
 ' Selection *********************************
 
-' 新しいインスタンスが生成されること
+' 譁ｰ縺励＞繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ縺檎函謌舌＆繧後ｋ縺薙→
 Function createNewInstance()
     ' SetTestName
     testName = "createNewInstance()"
@@ -15,7 +15,7 @@ Function createNewInstance()
     verify result, testName
 End Function
 
-' From, Lastの大小が修正されること
+' From, Last縺ｮ螟ｧ蟆上′菫ｮ豁｣縺輔ｌ繧九％縺ｨ
 Function fromLessThanLast()
     ' SetTestName
     testName = "fromLessThanLast()"
@@ -30,7 +30,7 @@ Function fromLessThanLast()
     verify result, testName
 End Function
 
-' From, Lastに同じ値がはいること
+' From, Last縺ｫ蜷後§蛟､縺後�ｯ縺�繧九％縺ｨ
 Function fromEqualsLast()
     ' SetTestName
     testName = "fromEqualsLast()"

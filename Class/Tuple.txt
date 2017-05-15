@@ -1,26 +1,26 @@
-' ƒƒ“ƒo *****************************
+' ãƒ¡ãƒ³ãƒ *****************************
 Private values As New collection
 
-' ƒCƒ“ƒXƒ^ƒ“ƒXƒRƒs[ *****************
+' ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚³ãƒ”ãƒ¼ *****************
 Public Property Get clone() As Tuple
     Dim r As New Tuple
     r.setValues = newCollection(values)
     Set clone = r
 End Property
 
-' ƒvƒ‰ƒCƒx[ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^ *********
+' ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ *********
 Private Property Get newTuple(vs As collection) As Tuple
     Dim r As New Tuple
     r.setValues = newCollection(vs)
     Set newTuple = r
 End Property
 
-' ƒCƒjƒVƒƒƒ‰ƒCƒU *********************
+' ã‚¤ãƒ‹ã‚·ãƒ£ãƒ©ã‚¤ã‚¶ *********************
 Public Property Let setValues(vs As collection)
     Set values = newCollection(vs)
 End Property
 
-' ƒIƒuƒWƒFƒNƒg‹¤’Ê ********************
+' ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå…±é€š ********************
 Public Property Get toString()
     toString = "Tuple(" & join(values, ", ") & ")"
 End Property
@@ -29,9 +29,9 @@ Private Property Get join(c As collection, delimiter As String)
     Dim r As String
     For i = 1 To c.count
         If i < c.count Then
-            r = r & c(i) & delimiter
+            r = r & c(i).toString() & delimiter
         Else
-            r = r & c(i)
+            r = r & c(i).toString()
         End If
     Next
     join = r
@@ -45,17 +45,17 @@ Public Property Get equals(that As Tuple)
     End If
 End Property
 
-' ƒƒ\ƒbƒh *****************************
+' ãƒ¡ã‚½ãƒƒãƒ‰ *****************************
 
-' ’l”²‚«o‚µ
-' @param s: Selection ”²‚«o‚·’l‚Ì‘I‘ğ”ÍˆÍ
-' @return Tuple ”²‚«o‚µ‚½’l‚ğ‚ÂV‚µ‚¢ƒ^ƒvƒ‹
+' å€¤æŠœãå‡ºã—
+' @param s: Selection æŠœãå‡ºã™å€¤ã®é¸æŠç¯„å›²
+' @return Tuple æŠœãå‡ºã—ãŸå€¤ã‚’æŒã¤æ–°ã—ã„ã‚¿ãƒ—ãƒ«
 Public Property Get trim(s As Selection) As Tuple
     Dim f As Long
     f = greater(1, s.getFrom())
     Dim l As Long
     l = less(s.getLast(), count())
-    ' ”²‚«o‚µ
+    ' æŠœãå‡ºã—
     Dim vs As New collection
     For i = f To l
         vs.add values(i)
@@ -63,47 +63,51 @@ Public Property Get trim(s As Selection) As Tuple
     Set trim = newTuple(vs)
 End Property
 
-' 2•ªŠ„
-' @param no: Long •ªŠ„‚·‚éêŠ‚ÌƒCƒ“ƒfƒbƒNƒX
-' @return TupleCollection •ªŠ„‚³‚ê‚½ƒ^ƒvƒ‹‚ğŠÜ‚ŞƒRƒŒƒNƒVƒ‡ƒ“
+' 2åˆ†å‰²
+' @param no: Long åˆ†å‰²ã™ã‚‹å ´æ‰€ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+' @return TupleCollection åˆ†å‰²ã•ã‚ŒãŸã‚¿ãƒ—ãƒ«ã‚’å«ã‚€ã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³
 Public Property Get split(no As Long) As Tuples2
     no = middle(1, no, EOB())
-    Dim f As New Factory
     Dim r As Tuples2
-    Set r = f.newTuples2(trim(f.newSelection(0, no - 1)), _
-                         trim(f.newSelection(no, EOB())))
+    Set r = newTuples2(trim(newSelection(0, no - 1)), _
+                         trim(newSelection(no, EOB())))
     Set split = r
 End Property
 
-' ’l‘}“ü
-' @param that: Tuple ‘}“ü‚·‚é’l‚ğ‚Âƒ^ƒvƒ‹
-' @param dest: Long ‘}“üæ‚Ì—v‘f”Ô†
-' @return Tuple ’l‚ª‘}“ü‚³‚ê‚½V‚µ‚¢ƒ^ƒvƒ‹
+' å€¤æŒ¿å…¥
+' @param that: Tuple æŒ¿å…¥ã™ã‚‹å€¤ã‚’æŒã¤ã‚¿ãƒ—ãƒ«
+' @param dest: Long æŒ¿å…¥å…ˆã®è¦ç´ ç•ªå·
+' @return Tuple å€¤ãŒæŒ¿å…¥ã•ã‚ŒãŸæ–°ã—ã„ã‚¿ãƒ—ãƒ«
 Public Property Get insert(that As Tuple, dest As Long) As Tuple
-    ' ‘}“üæC³
+    ' æŒ¿å…¥å…ˆä¿®æ­£
     Dim d As Long
     d = middle(1, dest, count() + 1)
-    ' ƒ^ƒvƒ‹•ªŠ„
+    ' ã‚¿ãƒ—ãƒ«åˆ†å‰²
     Dim t2 As Tuples2
     Set t2 = split(d)
-    ' ƒ^ƒvƒ‹”z’u
+    ' ã‚¿ãƒ—ãƒ«é…ç½®
     Dim t3 As New Tuples3
     t3.setLeft = t2.getLeft()
     t3.setMiddle = that.clone()
     t3.setRight = t2.getRight()
-    ' ƒ^ƒvƒ‹ƒ}[ƒW
+    ' ã‚¿ãƒ—ãƒ«ãƒãƒ¼ã‚¸
     Set insert = t3.marge()
 End Property
 
-' ’líœ
-' @param s: Selection íœ‚·‚é’l‚Ì‘I‘ğ”ÍˆÍ
-' @return Tuple —v‘f‚ªíœ‚³‚ê‚½V‚µ‚¢ƒ^ƒvƒ‹
+' å€¤æŒ¿å…¥ãƒªãƒãƒ¼ã‚¹
+Public Property Get insertR(that As Tuple, dest As Long) As Tuple
+    Set insertR = that.insert(clone(), dest)
+End Property
+
+' å€¤å‰Šé™¤
+' @param s: Selection å‰Šé™¤ã™ã‚‹å€¤ã®é¸æŠç¯„å›²
+' @return Tuple è¦ç´ ãŒå‰Šé™¤ã•ã‚ŒãŸæ–°ã—ã„ã‚¿ãƒ—ãƒ«
 Public Property Get remove(s As Selection) As Tuple
     Dim f As Long
     f = s.getFrom()
     Dim l As Long
     l = less(s.getLast(), count())
-    ' íœ
+    ' å‰Šé™¤
     Dim vs As collection
     Set vs = newCollection(values)
     For i = f To l
@@ -112,10 +116,10 @@ Public Property Get remove(s As Selection) As Tuple
     Set remove = newTuple(vs)
 End Property
 
-' ’lˆÚ“®
-' @param s: Selection ˆÚ“®‚·‚é’l‚Ì‘I‘ğ”ÍˆÍ
-' @param dest: Long ˆÚ“®æ‚Ì”Ô†
-' @param Tuple ’l‚ªˆÚ“®‚³‚ê‚½V‚µ‚¢ƒ^ƒvƒ‹
+' å€¤ç§»å‹•
+' @param s: Selection ç§»å‹•ã™ã‚‹å€¤ã®é¸æŠç¯„å›²
+' @param dest: Long ç§»å‹•å…ˆã®ç•ªå·
+' @param Tuple å€¤ãŒç§»å‹•ã•ã‚ŒãŸæ–°ã—ã„ã‚¿ãƒ—ãƒ«
 Public Property Get move(s As Selection, dest As Long) As Tuple
     Dim t As Tuple
     Set t = trim(s)
@@ -138,15 +142,14 @@ Public Property Get move(s As Selection, dest As Long) As Tuple
     End If
 End Property
 
-' ’l“\‚è•t‚¯
+' å€¤è²¼ã‚Šä»˜ã‘
 ' @param that: Tuple
 ' @param dest: Long
 Public Property Get paste(that As Tuple, dest As Long) As Tuple
-    Dim f As New Factory
     Dim thisS As Selection
-    Set thisS = f.newSelection(1, count())
+    Set thisS = newSelection(1, count())
     Dim thatS As Selection
-    Set thatS = f.newSelection(1, that.count())
+    Set thatS = newSelection(1, that.count())
     Dim thisSelection As Selection
     Dim thatSelection As Selection
     Set thisSelection = thisS.andSelection(thatS, dest)
@@ -157,9 +160,14 @@ Public Property Get paste(that As Tuple, dest As Long) As Tuple
     Set paste = r
 End Property
 
-' ƒ}[ƒW
-' @param that: Tuple ƒ}[ƒW‘ÎÛƒ^ƒvƒ‹
-' @return Tuple ƒ}[ƒW‚³‚ê‚½V‚µ‚¢ƒ^ƒvƒ‹
+' å€¤è²¼ã‚Šä»˜ã‘ãƒªãƒãƒ¼ã‚¹
+Public Property Get pasteR(that As Tuple, dest As Long) As Tuple
+    Set pasteR = that.paste(clone(), dest)
+End Property
+
+' ãƒãƒ¼ã‚¸
+' @param that: Tuple ãƒãƒ¼ã‚¸å¯¾è±¡ã‚¿ãƒ—ãƒ«
+' @return Tuple ãƒãƒ¼ã‚¸ã•ã‚ŒãŸæ–°ã—ã„ã‚¿ãƒ—ãƒ«
 Public Property Get marge(that As Tuple) As Tuple
     Dim vs As collection
     Set vs = newCollection(values)
@@ -170,10 +178,15 @@ Public Property Get marge(that As Tuple) As Tuple
     Set marge = newTuple(vs)
 End Property
 
-' ŒğŒİƒ}[ƒW
-' —v‘f”‚Ì­‚È‚¢•û‚Ì—v‘f”‚ÉØ‚è‹l‚ß‚ç‚ê‚é
-' @param that: Tuple ŒğŒİ‚Éƒ}[ƒW‚·‚éƒ^ƒvƒ‹
-' @return Tuple ŒğŒİ‚Éƒ}[ƒW‚³‚ê‚½V‚µ‚¢ƒ^ƒvƒ‹
+' ãƒãƒ¼ã‚¸ãƒªãƒãƒ¼ã‚¹
+Public Property Get margeR(that As Tuple) As Tuple
+    Set margeR = that.marge(clone())
+End Property
+
+' äº¤äº’ãƒãƒ¼ã‚¸
+' è¦ç´ æ•°ã®å°‘ãªã„æ–¹ã®è¦ç´ æ•°ã«åˆ‡ã‚Šè©°ã‚ã‚‰ã‚Œã‚‹
+' @param that: Tuple äº¤äº’ã«ãƒãƒ¼ã‚¸ã™ã‚‹ã‚¿ãƒ—ãƒ«
+' @return Tuple äº¤äº’ã«ãƒãƒ¼ã‚¸ã•ã‚ŒãŸæ–°ã—ã„ã‚¿ãƒ—ãƒ«
 Public Property Get zip(that As Tuple) As Tuple
     c = lessCount(that)
     Dim vs As New collection
@@ -185,36 +198,81 @@ Public Property Get zip(that As Tuple) As Tuple
     Set zip = newTuple(vs)
 End Property
 
-' —v‘fƒRƒŒƒNƒVƒ‡ƒ“‚ğæ“¾
-' @return Collection —v‘f‚ÌƒRƒŒƒNƒVƒ‡ƒ“
+' äº¤äº’ãƒãƒ¼ã‚¸ãƒªãƒãƒ¼ã‚¹
+Public Property Get zipR(that As Tuple) As Tuple
+    Set zipR = that.zip(clone())
+End Property
+
+' ã‚¹ã‚­ãƒƒãƒ—äº¤äº’ãƒãƒ¼ã‚¸
+Public Property Get skipZip(that As Tuple, n As Long) As Tuple
+    If n = 0 Then
+        Set skipZip = clone()
+        Exit Property
+    End If
+    c = less(count(), that.count() * n)
+    Dim vs As New collection
+    Dim i As Long
+    For i = 1 To c
+        vs.add values(i)
+        If i Mod n = 0 Then
+            vs.add that.getValue(i / n)
+        End If
+    Next
+    Set skipZip = newTuple(vs)
+End Property
+
+' ã‚¹ã‚­ãƒƒãƒ—äº¤äº’ãƒãƒ¼ã‚¸ãƒªãƒãƒ¼ã‚¹
+Public Property Get skipZipR(that As Tuple, n As Long) As Tuple
+    Set skipZipR = that.skipZip(clone(), n)
+End Property
+
+' ã‚¹ã‚­ãƒƒãƒ—ã‚¤ãƒ³ã‚µãƒ¼ãƒˆ
+Public Property Get skipInsert(v, n As Long) As Tuple
+    Set skipInsert = skipZip(newTuple(newFilledCollection(v, count() / n + 1)), n)
+End Property
+
+' ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°å·¦
+Public Property Get paddingLeft(v, size As Long) As Tuple
+    Dim f As New Factory
+    Dim c As New collection
+End Property
+
+' ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°å³
+Public Property Get paddingRight(v, size As Long) As Tuple
+
+End Property
+
+
+' è¦ç´ ã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³ã‚’å–å¾—
+' @return Collection è¦ç´ ã®ã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³
 Public Property Get getValues() As collection
     Set getValues = newCollection(values)
 End Property
 
-' —v‘f‚ğæ“¾
-' @param no æ‚èo‚·—v‘f”Ô†
-' @return æ‚èo‚·—v‘f
+' è¦ç´ ã‚’å–å¾—
+' @param no å–ã‚Šå‡ºã™è¦ç´ ç•ªå·
+' @return å–ã‚Šå‡ºã™è¦ç´ 
 Public Property Get getValue(no As Long)
     Set getValue = values(no)
 End Property
 
-' —v‘f”‚ğæ“¾
-' @return Long —v‘f‚Ì”
+' è¦ç´ æ•°ã‚’å–å¾—
+' @return Long è¦ç´ ã®æ•°
 Public Property Get count() As Long
     count = values.count()
 End Property
 
-' ÅI—v‘fŠÔƒCƒ“ƒfƒbƒNƒX‚Ìæ“¾
-' @return Long ÅI—v‘f‚Ì‰E‚Ì—v‘fŠÔƒCƒ“ƒfƒbƒNƒX
+' æœ€çµ‚è¦ç´ é–“ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å–å¾—
+' @return Long æœ€çµ‚è¦ç´ ã®å³ã®è¦ç´ é–“ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 Public Property Get EOB() As Long
     EOB = count() + 1
 End Property
 
-' ƒvƒ‰ƒCƒx[ƒg ***********************
+' ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆ ***********************
 
-' —v‘f”‚Ì­‚È‚¢•û‚Ì—v‘f”‚ğæ“¾
-' @param that: Tuple ”äŠr‘ÎÛƒ^ƒvƒ‹
-' @return Long —v‘f”‚ª­‚È‚¢•û‚Ì—v‘f”
+' è¦ç´ æ•°ã®å°‘ãªã„æ–¹ã®è¦ç´ æ•°ã‚’å–å¾—
+' @param that: Tuple æ¯”è¼ƒå¯¾è±¡ã‚¿ãƒ—ãƒ«
+' @return Long è¦ç´ æ•°ãŒå°‘ãªã„æ–¹ã®è¦ç´ æ•°
 Private Property Get lessCount(that As Tuple)
     If values.count < that.count Then
         lessCount = values.count

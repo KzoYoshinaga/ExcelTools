@@ -1,22 +1,14 @@
-' ƒƒ“ƒo *****************************
+' ãƒ¡ãƒ³ãƒ *****************************
 Private f As Long
 Private l As Long
 
-' ƒRƒ“ƒXƒgƒ‰ƒNƒ^ *********************
+' ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ *********************
 Public Sub class_initialize()
     f = -2147483647
     l = 2147483647
 End Sub
 
-' ƒvƒ‰ƒCƒx[ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
-Private Property Get newSelection(from As Long, last As Long) As Selection
-    Dim r As New Selection
-    r.setFrom = from
-    r.setLast = last
-    Set newSelection = r
-End Property
-
-' ƒCƒjƒVƒƒƒ‰ƒCƒU *********************
+' ã‚¤ãƒ‹ã‚·ãƒ£ãƒ©ã‚¤ã‚¶ *********************
 Public Property Let setFrom(from As Long)
     f = less(from, l)
     l = greater(f, from)
@@ -27,7 +19,7 @@ Public Property Let setLast(last As Long)
     f = less(f, last)
 End Property
 
-' ƒIƒuƒWƒFƒNƒg‹¤’Ê ********************
+' ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå…±é€š ********************
 Public Property Get toString()
     toString = "Selection(" & f & ", " & l & ")"
 End Property
@@ -40,7 +32,7 @@ Public Property Get equals(that As Tuple)
     End If
 End Property
 
-' ƒƒ\ƒbƒh ***************************
+' ãƒ¡ã‚½ãƒƒãƒ‰ ***************************
 
 Public Property Get getFrom()
     getFrom = f
@@ -50,7 +42,7 @@ Public Property Get getLast()
     getLast = l
 End Property
 
-' Ï”ÍˆÍ
+' ç©ç¯„å›²
 Public Property Get andSelection(that As Selection, dest As Long) As Selection
     Dim from As Long
     from = middle(dest, getFrom(), that.getLast() + dest - 1)

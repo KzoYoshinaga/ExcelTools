@@ -1,42 +1,38 @@
 ' Tuples2 **********************************************
 
-' V‚µ‚¢ƒCƒ“ƒXƒ^ƒ“ƒX‚ª¶¬‚³‚ê‚é‚±‚Æ
+' æ–°ã—ã„ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãŒç”Ÿæˆã•ã‚Œã‚‹ã“ã¨
 Private Function createNewInstance()
     ' SetTestName
     testName = "createNewInstance()"
 
     ' Arrange
-    Dim f As New Factory
-    
     Dim values As New collection
     values.add "a"
      
     ' Do
     Dim ts2 As New Tuples2
-    ts2.setLeft = f.newTuple(values)
-    ts2.setRight = f.newTuple(values)
+    ts2.setLeft = newTuple(values)
+    ts2.setRight = newTuple(values)
        
     ' Verification
     result = equals(ts2.toString, "Tuples3(Tuple(a), Tuple(a))")
     verify result, testName
 End Function
 
-' ¶ƒ^ƒvƒ‹‚ªŽæ‚èo‚¹‚é‚±‚Æ
+' å·¦ã‚¿ãƒ—ãƒ«ãŒå–ã‚Šå‡ºã›ã‚‹ã“ã¨
 Private Function getLeft()
     ' SetTestName
     testName = "getLeft()"
 
     ' Arrange
-    Dim f As New Factory
-    
     Dim values1 As New collection
     values1.add "a"
     Dim values2 As New collection
     values2.add "b"
     
     Dim ts2 As New Tuples2
-    ts2.setLeft = f.newTuple(values1)
-    ts2.setRight = f.newTuple(values2)
+    ts2.setLeft = newTuple(values1)
+    ts2.setRight = newTuple(values2)
    
     'Do
     Dim r As Tuple
@@ -47,22 +43,20 @@ Private Function getLeft()
     verify result, testName
 End Function
 
-' ‰Eƒ^ƒvƒ‹‚ªŽæ‚èo‚¹‚é‚±‚Æ
+' å³ã‚¿ãƒ—ãƒ«ãŒå–ã‚Šå‡ºã›ã‚‹ã“ã¨
 Private Function getRight()
     ' SetTestName
     testName = "getRight()"
 
     ' Arrange
-    Dim f As New Factory
-    
     Dim values1 As New collection
     values1.add "a"
     Dim values2 As New collection
     values2.add "b"
     
     Dim ts2 As New Tuples2
-    ts2.setLeft = f.newTuple(values1)
-    ts2.setRight = f.newTuple(values2)
+    ts2.setLeft = newTuple(values1)
+    ts2.setRight = newTuple(values2)
    
     ' Do
     Dim r As Tuple
@@ -73,22 +67,20 @@ Private Function getRight()
     verify result, testName
 End Function
 
-' Œ‹‡‚³‚ê‚½ƒ^ƒvƒ‹‚ªŽæ‚èo‚¹‚é‚±‚Æ
+' çµåˆã•ã‚ŒãŸã‚¿ãƒ—ãƒ«ãŒå–ã‚Šå‡ºã›ã‚‹ã“ã¨
 Private Function marge()
     ' SetTestName
     testName = "marge()"
 
-   ' Arrange
-    Dim f As New Factory
-    
+    ' Arrange
     Dim values1 As New collection
     values1.add "a"
     Dim values2 As New collection
     values2.add "b"
     
     Dim ts2 As New Tuples2
-    ts2.setLeft = f.newTuple(values1)
-    ts2.setRight = f.newTuple(values2)
+    ts2.setLeft = newTuple(values1)
+    ts2.setRight = newTuple(values2)
     
     ' Do
     Dim r As Tuple

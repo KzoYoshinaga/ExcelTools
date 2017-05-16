@@ -42,6 +42,16 @@ Function middle(n1 As Long, n2 As Long, n3 As Long) As Long
     middle = r
 End Function
 
+' Sheet ****************************************************************
+
+Public Function cell(s As String, r As String) As Range
+    Set cell = Sheets(s).Range(r)
+End Function
+
+Public Function box(s As String, c As Long, r As Long) As Range
+    Set cell = Sheets(s).Range("A1").Offset(c - 1, r - 1)
+End Function
+
 
 
 

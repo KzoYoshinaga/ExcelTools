@@ -26,9 +26,9 @@ End Property
 
 ' データインポート　ヘッダあり
 ' @param s: Worksheet インポートするテーブルが格納されたシート
-Public Property Get import(s As Worksheet) As table
+Public Property Get import(r As Range) As table
     Dim sh As sheet
-    Set sh = newSheet(s)
+    Set sh = newSheet(r)
     Dim c As New collection
     Set header = newTuple(sh.getRowCollection(1))
 

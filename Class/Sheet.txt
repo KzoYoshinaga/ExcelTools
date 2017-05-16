@@ -1,15 +1,15 @@
 ' メンバ **********************************
-Private s As Worksheet
+Private r As Range
 
 
 ' イニシャライザ *********************
-Public Property Let setValues(sheet As Worksheet)
-    Set s = sheet
+Public Property Let setValues(ran As Range)
+    Set r = ran
 End Property
 
 ' オブジェクト共通 ********************
 Public Property Get toString()
-    toString = "Sheet(" & sheet.Name & ")"
+    toString = "SheetRange(" & r.Column & ", " & r.row & ")"
 End Property
 
 Public Property Get equals(that As Tuple)
@@ -23,24 +23,24 @@ End Property
 ' 行数取得
 ' @return Long シートの行数
 Public Property Get getRowCount() As Long
-    If s.Range("A1").value = "" Then
+    If r.value = "" Then
         getRowCount = 0
-    ElseIf s.Range("A2").value = "" Then
+    ElseIf r.Offset(1, 0).value = "" Then
         getRowCount = 1
     Else
-        getRowCount = s.Range("A1").End(xlDown).row
+        getRowCount = r.End(xlDown).row
     End If
 End Property
 
 ' 列数取得
 ' @return Long シートの列数
 Public Property Get getColumnCount() As Long
-    If s.Range("A1").value = "" Then
+    If r.value = "" Then
         getColumnCount = 0
-    ElseIf s.Range("B1").value = "" Then
+    ElseIf r.Offset(0, 1).value = "" Then
         getColumnCount = 1
     Else
-        getColumnCount = s.Range("A1").End(xlToRight).Column
+        getColumnCount = r.End(xlToRight).Column
     End If
 End Property
 
@@ -51,7 +51,7 @@ End Property
 Public Function getRowCollection(rowNo As Long) As collection
     Dim c As New collection
     For i = 1 To getColumnCount()
-        c.add newElement(s.Cells(rowNo, i).value)
+        c.add newElement(r.Offset(rowNo - 1, i - 1).value)
     Next
     Set getRowCollection = c
 End Function

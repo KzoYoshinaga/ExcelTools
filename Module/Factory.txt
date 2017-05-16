@@ -27,9 +27,9 @@ Function newTuples3(left As Tuple, middle As Tuple, right As Tuple) As Tuples3
     Set newTuples3 = r
 End Function
 
-Function newSheet(s As Worksheet) As sheet
+Function newSheet(ran As Range) As sheet
     Dim r As New sheet
-    r.setValues = s
+    r.setValues = ran
     Set newSheet = r
 End Function
 

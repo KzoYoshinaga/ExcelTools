@@ -9,7 +9,7 @@ Function createNewInstance()
     Dim s As New Selection
     s.setFrom = 1
     s.setLast = 2
-    
+
     ' Verification
     result = equals(s.toString, "Selection(1, 2)")
     verify result, testName
@@ -24,7 +24,7 @@ Function fromLessThanLast()
     Dim s As New Selection
     s.setFrom = 20
     s.setLast = 2
-        
+
     ' Verification
     result = equals(s.toString, "Selection(2, 20)")
     verify result, testName
@@ -39,7 +39,7 @@ Function fromEqualsLast()
     Dim s As New Selection
     s.setFrom = 2
     s.setLast = 2
-        
+
     ' Verification
     result = equals(s.toString, "Selection(2, 2)")
     verify result, testName

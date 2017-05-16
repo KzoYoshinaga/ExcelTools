@@ -1,22 +1,18 @@
-Private Function test()
-
-    Sheets("pile").Cells.Clear
-    Sheets("zip").Cells.Clear
-    Sheets("test").Cells.Clear
-
-    Dim t As New table
-
-    Call t. _
-          import(Sheets("A")). _
-          skipPile(t.import(Sheets("B")), 4). _
-          export(Sheets("pile").Range("A1")). _
-          terminate
-
-    Call t. _
-          import(Sheets("A")). _
-          skipZip(t.import(Sheets("B")), 2). _
-          export(Sheets("zip").Range("A1")). _
-          terminate
-
-
-End Function
+Public Property Get insertColumn(that As table, n As Long) As table
+    Dim h2 As Tuples2
+    Set h2 = header.split(n)
+    Dim t2 As Tuples2
+    Dim c As New collection
+    Dim min As Long
+    min = less(rowCount(), that.rowCount())
+    Dim i As Long
+    For i = 1 To min
+        Set t2 = getTuple(i).split(n)
+        c.add t2.getLeft().marge(that.getTuple(i)).marge(t2.getRight())
+    Next
+    For i = min To rowCount()
+        Set t2 = getTuple(i).split(n)
+        c.add t2.getLeft().marge(newTuple(newFilledCollection(newElement(""), that.columnCount()))).marge(t2.getRight())
+    Next
+    Set insertColumn = newTable(newTuple(c), h2.getLeft().marge(that.getHeader()).marge(h2.getRight()))
+End Property

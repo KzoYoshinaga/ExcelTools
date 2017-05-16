@@ -8,20 +8,20 @@ Private Function createNewInstance()
     ' Arrange
     Dim values As New collection
     values.add newElement("a")
-     
+
     Dim t1 As New Tuple
     t1.setValues = values
     Dim t2 As New Tuple
     t2.setValues = values
     Dim t3 As New Tuple
     t3.setValues = values
-       
+
     ' Do
     Dim ts3 As New Tuples3
     ts3.setLeft = t1
     ts3.setMiddle = t2
     ts3.setRight = t3
-       
+
     ' Verification
     result = equals(ts3.toString, "Tuples3(Tuple(a), Tuple(a), Tuple(a))")
     verify result, testName
@@ -39,15 +39,15 @@ Private Function getLeft()
     values2.add newElement("b")
     Dim values3 As New collection
     values3.add newElement("c")
-    
+
     Dim ts3 As New Tuples3
     ts3.setLeft = newTuple(values1)
     ts3.setMiddle = newTuple(values2)
     ts3.setRight = newTuple(values3)
-   
+
     Dim r As Tuple
     Set r = ts3.getLeft
-    
+
     ' Verification
     result = equals(r.toString, "Tuple(a)")
     verify result, testName
@@ -64,15 +64,15 @@ Private Function getMiddle()
     values2.add newElement("b")
     Dim values3 As New collection
     values3.add newElement("c")
-    
+
     Dim ts3 As New Tuples3
     ts3.setLeft = newTuple(values1)
     ts3.setMiddle = newTuple(values2)
     ts3.setRight = newTuple(values3)
-   
+
     Dim r As Tuple
     Set r = ts3.getMiddle()
-    
+
     ' Verification
     result = equals(r.toString, "Tuple(b)")
     verify result, testName
@@ -90,15 +90,15 @@ Private Function getRight()
     values2.add newElement("b")
     Dim values3 As New collection
     values3.add newElement("c")
-    
+
     Dim ts3 As New Tuples3
     ts3.setLeft = newTuple(values1)
     ts3.setMiddle = newTuple(values2)
     ts3.setRight = newTuple(values3)
-   
+
     Dim r As Tuple
     Set r = ts3.getRight()
-    
+
     ' Verification
     result = equals(r.toString, "Tuple(c)")
     verify result, testName
@@ -116,15 +116,15 @@ Private Function marge()
     values2.add newElement("b")
     Dim values3 As New collection
     values3.add newElement("c")
-    
+
     Dim ts3 As New Tuples3
     ts3.setLeft = newTuple(values1)
     ts3.setMiddle = newTuple(values2)
     ts3.setRight = newTuple(values3)
-   
+
     Dim r As Tuple
     Set r = ts3.marge()
-        
+
     ' Verification
     result = equals(r.toString, "Tuple(a, b, c)")
     verify result, testName

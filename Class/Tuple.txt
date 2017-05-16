@@ -233,13 +233,22 @@ End Property
 
 ' パディング左
 Public Property Get paddingLeft(v, size As Long) As Tuple
-    Dim f As New Factory
-    Dim c As New collection
+   Set paddingLeft = newTuple(newFilledCollection(v, size - count)).marge(clone)
 End Property
 
 ' パディング右
 Public Property Get paddingRight(v, size As Long) As Tuple
+    Set paddingRight = marge(newTuple(newFilledCollection(v, size - count)))
+End Property
 
+' リピート
+Public Property Get repeat(times As Long) As Tuple
+    Dim t As New Tuple
+    Dim i As Long
+    For i = 1 To times
+        Set t = t.marge(clone())
+    Next
+    Set repeat = t
 End Property
 
 

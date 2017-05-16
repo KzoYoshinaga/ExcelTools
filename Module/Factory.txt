@@ -39,9 +39,10 @@ Function newElement(v) As Element
     Set newElement = r
 End Function
 
-Function newTable(tuples As Tuple) As table
+Function newTable(tuples As Tuple, h As Tuple) As table
     Dim r As New table
     r.setTuples = tuples
+    r.setHeader = h
     Set newTable = r
 End Function
 

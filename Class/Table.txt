@@ -2,6 +2,7 @@
 
 ' メンバー ***************************
 Private tuples As New Tuple
+Private header As New Tuple
 
 ' イニシャライザ *********************
 ' タプルセット
@@ -9,23 +10,30 @@ Public Property Let setTuples(ts As Tuple)
     Set tuples = ts
 End Property
 
+Public Property Let setHeader(h As Tuple)
+    Set header = h
+End Property
+
 ' クローン **************************
 Public Property Get clone() As table
     Dim r As New table
     r.setTuples = tuples.clone()
+    r.setHeader = header.clone()
     Set clone = r
 End Property
 
 ' クエリ *****************************
 
-' データインポート
+' データインポート　ヘッダあり
 ' @param s: Worksheet インポートするテーブルが格納されたシート
 Public Property Get import(s As Worksheet) As table
     Dim sh As sheet
     Set sh = newSheet(s)
     Dim c As New collection
+    Set header = newTuple(sh.getRowCollection(1))
+
     Dim i As Long
-    For i = 1 To sh.getRowCount()
+    For i = 2 To sh.getRowCount()
         c.add newTuple(sh.getRowCollection(i))
     Next
     Set tuples = newTuple(c)
@@ -37,9 +45,10 @@ End Property
 Public Property Get export(r As Range) As table
     Dim i As Long
     Dim j As Long
-    Dim t As Tuple
-    For i = 1 To tuples.count()
-        Set t = tuples.getValue(i)
+    Dim th As Tuple
+    Set th = newTuple(newFilledCollection(header, 1)).marge(tuples)
+    For i = 1 To th.count()
+        Set t = th.getValue(i)
         For j = 1 To t.count()
             r.Offset(i - 1, j - 1).value = t.getValue(j).getValue
         Next
@@ -47,14 +56,50 @@ Public Property Get export(r As Range) As table
     Set export = clone()
 End Property
 
-' 行分割
-Public Property Get splitColumn(columnNo As Integer)
-
+' データエクスポート
+' @param r: Range エクスポートするテーブルを配置するセル
+Public Property Get exportWithoutHeader(r As Range) As table
+    Dim i As Long
+    Dim j As Long
+    Dim t As Tuple
+    For i = 1 To tuples.count()
+        Set t = tuples.getValue(i)
+        For j = 1 To t.count()
+            r.Offset(i - 1, j - 1).value = t.getValue(j).getValue
+        Next
+    Next
+    Set exportWithoutHeader = clone()
 End Property
 
-' 列分割
-Public Property Get splitRow(rowNo As Integer)
+' 行挿入
+Public Property Get insertColumn(that As table, n As Long) As table
+    Dim h2 As Tuples2
+    Set h2 = header.split(n)
+    Dim t2 As Tuples2
+    Dim c As New collection
+    Dim min As Long
+    min = less(rowCount(), that.rowCount())
+    Dim i As Long
+    For i = 1 To min
+        Set t2 = getTuple(i).split(n)
+        c.add t2.getLeft().marge(that.getTuple(i)).marge(t2.getRight())
+    Next
+    For i = min + 1 To rowCount()
+        Set t2 = getTuple(i).split(n)
+        c.add t2.getLeft().marge(newTuple(newFilledCollection(newElement(""), that.columnCount()))).marge(t2.getRight())
+    Next
+    Set insertColumn = newTable(newTuple(c), h2.getLeft().marge(that.getHeader()).marge(h2.getRight()))
+End Property
 
+' 行挿入リバース
+Public Property Get insertColumnR(that As table, n As Long) As table
+    Set insertColumnR = that.insertColumn(clone(), n)
+End Property
+
+
+' 列挿入
+Public Property Get insertRow(that As table, no As Long) As table
+    ' ???
 End Property
 
 ' 行交互マージ
@@ -66,7 +111,7 @@ Public Property Get zip(that As table) As table
     For i = 1 To count
         c.add getTuple(i).zip(that.getTuple(i))
     Next
-    Set zip = newTable(newTuple(c))
+    Set zip = newTable(newTuple(c), header.zip(that.getHeader()))
 End Property
 
 ' 行交互マージリバース
@@ -83,7 +128,7 @@ Public Property Get skipZip(that As table, n As Long) As table
     For i = 1 To count
         c.add getTuple(i).skipZip(that.getTuple(i), n)
     Next
-    Set skipZip = newTable(newTuple(c))
+    Set skipZip = newTable(newTuple(c), header.skipZip(that.getHeader(), n))
 End Property
 
 ' スキップ行交互マージリバース
@@ -93,7 +138,7 @@ End Property
 
 ' 列交互マージ
 Public Property Get pile(that As table) As table
-    Set pile = newTable(tuples.zip(that.getTuples()))
+    Set pile = newTable(tuples.zip(that.getTuples()), getHeader())
 End Property
 
 ' 交互マージリバース
@@ -103,7 +148,7 @@ End Property
 
 ' スキップ列交互マージ
 Public Property Get skipPile(that As table, n As Long) As table
-    Set skipPile = newTable(tuples.skipZip(that.getTuples(), n))
+    Set skipPile = newTable(tuples.skipZip(that.getTuples(), n), getHeader())
 End Property
 
 ' スキップ列交互マージリバース
@@ -113,7 +158,7 @@ End Property
 
 ' 上
 Public Property Get abave(that As table) As table
-    Set abave = newTable(getTuples().marge(that.getTuples()))
+    Set abave = newTable(getTuples().marge(that.getTuples()), getHeader())
 End Property
 
 ' 下
@@ -139,8 +184,8 @@ Public Property Get left(that As table) As table
             c.add getTuple(i).marge(newTuple(newFilledCollection(newElement(""), that.columnCount)))
         Next
     End If
-    
-    Set left = newTable(newTuple(c))
+
+    Set left = newTable(newTuple(c), header.marge(that.getHeader()))
 End Property
 
 ' 右
@@ -155,7 +200,12 @@ End Property
 
 ' タプタプ
 Public Property Get getTuples() As Tuple
-    Set getTuples = tuples
+    Set getTuples = tuples.clone
+End Property
+
+' ヘッダ
+Public Property Get getHeader() As Tuple
+    Set getHeader = header.clone
 End Property
 
 ' カラム数

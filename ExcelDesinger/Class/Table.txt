@@ -71,7 +71,7 @@ Public Property Get exportWithoutHeader(r As Range) As table
     Set exportWithoutHeader = clone()
 End Property
 
-' 行コピー
+' 列コピー
 Public Property Get trimByColumns(s As Selection) As table
     Dim h As New Tuple
     Set h = header.trim(s)
@@ -83,12 +83,12 @@ Public Property Get trimByColumns(s As Selection) As table
     Set trimByColumns = newTable(newTuple(c), h)
 End Property
 
-' 列コピー
+' 行コピー
 Public Property Get trimByRows(s As Selection) As table
-    Set trimByRows = newTable(getTuples.trim(s), h)
+    Set trimByRows = newTable(getTuples.trim(s), getHeader)
 End Property
 
-' 行挿入
+' 列挿入
 Public Property Get insertColumn(that As table, n As Long) As table
     Dim h2 As Tuples2
     Set h2 = header.split(n)
@@ -108,18 +108,33 @@ Public Property Get insertColumn(that As table, n As Long) As table
     Set insertColumn = newTable(newTuple(c), h2.getLeft().marge(that.getHeader()).marge(h2.getRight()))
 End Property
 
-' 行挿入リバース
+' 列挿入リバース
 Public Property Get insertColumnR(that As table, n As Long) As table
     Set insertColumnR = that.insertColumn(clone(), n)
 End Property
 
 
-' 列挿入
-Public Property Get insertRow(that As table, no As Long) As table
-    ' ???
+' 行挿入
+Public Property Get insertRow(that As table, n As Long) As table
+    Dim c As New collection
+    Dim i As Long
+    For i = 1 To rowCount
+        If i = n Then
+            Dim j As Long
+            For j = 1 To that.rowCount
+                If columnCount > that.columnCount Then
+                    c.add that.getTuple(j).paddingLeft(newElement(""), rowCount())
+                Else
+                    c.add that.getTuple(j).trim(newSelection(1, rowCount))
+                End If
+            Next
+        End If
+        c.add getTuple(i)
+    Next
+    Set insertRow = newTable(newTuple(c), getHeader)
 End Property
 
-' 行交互マージ
+' 列交互マージ
 Public Property Get zip(that As table) As table
     Dim count As Long
     count = less(rowCount(), that.rowCount())
@@ -131,12 +146,12 @@ Public Property Get zip(that As table) As table
     Set zip = newTable(newTuple(c), header.zip(that.getHeader()))
 End Property
 
-' 行交互マージリバース
+' 列交互マージリバース
 Public Property Get zipR(that As table) As table
     Set zipR = that.zip(clone())
 End Property
 
-' スキップ行交互マージ
+' スキップ列交互マージ
 Public Property Get skipZip(that As table, n As Long) As table
     Dim count As Long
     count = less(rowCount(), that.rowCount())
@@ -148,27 +163,27 @@ Public Property Get skipZip(that As table, n As Long) As table
     Set skipZip = newTable(newTuple(c), header.skipZip(that.getHeader(), n))
 End Property
 
-' スキップ行交互マージリバース
+' スキップ列交互マージリバース
 Public Property Get skipZipR(that As table, n As Long) As table
     Set skipZipR = that.skipZip(clone(), n)
 End Property
 
-' 列交互マージ
+' 行交互マージ
 Public Property Get pile(that As table) As table
     Set pile = newTable(tuples.zip(that.getTuples()), getHeader())
 End Property
 
-' 交互マージリバース
+' 行互マージリバース
 Public Property Get pileR(that As table) As table
     Set pileR = that.pile(clone())
 End Property
 
-' スキップ列交互マージ
+' スキップ行交互マージ
 Public Property Get skipPile(that As table, n As Long) As table
     Set skipPile = newTable(tuples.skipZip(that.getTuples(), n), getHeader())
 End Property
 
-' スキップ列交互マージリバース
+' スキップ行交互マージリバース
 Public Property Get skipPileR(that As table, n As Long) As table
     Set skipPileR = that.skipPile(clone(), n)
 End Property

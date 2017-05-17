@@ -1,7 +1,14 @@
+' フィールド *************************
 Private v
+Private tag As String
 
+' イニシャライザ **********************
 Public Property Let setValue(value)
     v = value
+End Property
+
+Public Property Let setStyle(s As String)
+    tag = s
 End Property
 
 Public Property Get getValue()

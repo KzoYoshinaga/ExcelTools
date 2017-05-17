@@ -1,0 +1,58 @@
+Attribute VB_Name = "Common"
+' ƒwƒ‹ƒp ***************************
+Function equals(t1, t2)
+    If t1 = t2 Then
+        equals = True
+    Else
+        equals = False
+    End If
+End Function
+
+Function verify(result, testName)
+    If result Then
+        Debug.Print " Success : " & testName
+    Else
+        Debug.Print " Fail: " & testName
+    End If
+End Function
+
+Function less(n1 As Long, n2 As Long) As Long
+    If n1 < n2 Then
+        less = n1
+    Else
+        less = n2
+    End If
+End Function
+
+Function greater(n1 As Long, n2 As Long) As Long
+    If n1 > n2 Then
+        greater = n1
+    Else
+        greater = n2
+    End If
+End Function
+
+Function middle(n1 As Long, n2 As Long, n3 As Long) As Long
+    Dim s As Long
+    s = less(n1, n3)
+    Dim l As Long
+    l = greater(n1, n3)
+    Dim r As Long
+    r = greater(s, n2)
+    r = less(r, l)
+    middle = r
+End Function
+
+' Sheet ****************************************************************
+
+Public Function cell(s As String, r As String) As Range
+    Set cell = Sheets(s).Range(r)
+End Function
+
+Public Function box(s As String, c As Long, r As Long) As Range
+    Set cell = Sheets(s).Range("A1").Offset(c - 1, r - 1)
+End Function
+
+
+
+

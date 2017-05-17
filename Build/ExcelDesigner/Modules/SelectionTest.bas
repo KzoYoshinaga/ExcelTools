@@ -1,0 +1,48 @@
+Attribute VB_Name = "SelectionTest"
+' Selection *********************************
+
+' 新しいインスタンスが生成されること
+Function createNewInstance()
+    ' SetTestName
+    testName = "createNewInstance()"
+
+    ' Do
+    Dim s As New Selection
+    s.setFrom = 1
+    s.setLast = 2
+    
+    ' Verification
+    result = equals(s.toString, "Selection(1, 2)")
+    verify result, testName
+End Function
+
+' From, Lastの大小が修正されること
+Function fromLessThanLast()
+    ' SetTestName
+    testName = "fromLessThanLast()"
+
+    ' Do
+    Dim s As New Selection
+    s.setFrom = 20
+    s.setLast = 2
+        
+    ' Verification
+    result = equals(s.toString, "Selection(2, 20)")
+    verify result, testName
+End Function
+
+' From, Lastに同じ値がはいること
+Function fromEqualsLast()
+    ' SetTestName
+    testName = "fromEqualsLast()"
+
+    ' Do
+    Dim s As New Selection
+    s.setFrom = 2
+    s.setLast = 2
+        
+    ' Verification
+    result = equals(s.toString, "Selection(2, 2)")
+    verify result, testName
+End Function
+

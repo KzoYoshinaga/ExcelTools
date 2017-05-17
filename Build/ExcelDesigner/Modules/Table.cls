@@ -1,0 +1,289 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+END
+Attribute VB_Name = "Table"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = False
+' 可変オブジェクト
+
+' メンバー ***************************
+Private tuples As New Tuple
+Private header As New Tuple
+
+' イニシャライザ *********************
+' タプルセット
+Public Property Let setTuples(ts As Tuple)
+    Set tuples = ts
+End Property
+
+Public Property Let setHeader(h As Tuple)
+    Set header = h
+End Property
+
+' クローン **************************
+Public Property Get clone() As table
+    Dim r As New table
+    r.setTuples = tuples.clone()
+    r.setHeader = header.clone()
+    Set clone = r
+End Property
+
+' クエリ *****************************
+
+' データインポート　ヘッダあり
+' @param s: Worksheet インポートするテーブルが格納されたシート
+Public Property Get import(r As Range) As table
+    Dim sh As sheet
+    Set sh = newSheet(r)
+    Dim c As New collection
+    Set header = newTuple(sh.getRowCollection(1))
+    
+    Dim i As Long
+    For i = 2 To sh.getRowCount()
+        c.add newTuple(sh.getRowCollection(i))
+    Next
+    Set tuples = newTuple(c)
+    Set import = clone()
+End Property
+
+' データエクスポート
+' @param r: Range エクスポートするテーブルを配置するセル
+Public Property Get export(r As Range) As table
+    Dim i As Long
+    Dim j As Long
+    Dim th As Tuple
+    Set th = newTuple(newFilledCollection(header, 1)).marge(tuples)
+    For i = 1 To th.count()
+        Set t = th.getValue(i)
+        For j = 1 To t.count()
+            r.Offset(i - 1, j - 1).value = t.getValue(j).getValue
+        Next
+    Next
+    Set export = clone()
+End Property
+
+' データエクスポート
+' @param r: Range エクスポートするテーブルを配置するセル
+Public Property Get exportWithoutHeader(r As Range) As table
+    Dim i As Long
+    Dim j As Long
+    Dim t As Tuple
+    For i = 1 To tuples.count()
+        Set t = tuples.getValue(i)
+        For j = 1 To t.count()
+            r.Offset(i - 1, j - 1).value = t.getValue(j).getValue
+        Next
+    Next
+    Set exportWithoutHeader = clone()
+End Property
+
+' 列コピー
+Public Property Get trimByColumns(s As Selection) As table
+    Dim h As New Tuple
+    Set h = header.trim(s)
+    Dim c As New collection
+    Dim i As Long
+    For i = 1 To rowCount()
+        c.add getTuple(i).trim(s)
+    Next
+    Set trimByColumns = newTable(newTuple(c), h)
+End Property
+
+' 行コピー
+Public Property Get trimByRows(s As Selection) As table
+    Set trimByRows = newTable(getTuples.trim(s), getHeader)
+End Property
+
+' 列リピート
+Public Property Get repeatColumns(times As Long) As table
+    Dim i As Long
+    Dim t As New table
+    Set t = clone()
+    For i = 1 To times - 1
+        Set t = t.left(clone())
+    Next
+    Set repeatColumns = t
+End Property
+
+' 行リピート
+Public Property Get repeatRows(times As Long) As table
+    Dim i As Long
+    Dim t As New table
+    Set t = clone()
+    For i = 1 To times - 1
+        Set t = t.abave(clone())
+    Next
+    Set repeatRows = t
+End Property
+
+' 列挿入
+Public Property Get insertColumn(that As table, n As Long) As table
+    Dim h2 As Tuples2
+    Set h2 = header.split(n)
+    Dim t2 As Tuples2
+    Dim c As New collection
+    Dim min As Long
+    min = less(rowCount(), that.rowCount())
+    Dim i As Long
+    For i = 1 To min
+        Set t2 = getTuple(i).split(n)
+        c.add t2.getLeft().marge(that.getTuple(i)).marge(t2.getRight())
+    Next
+    For i = min + 1 To rowCount()
+        Set t2 = getTuple(i).split(n)
+        c.add t2.getLeft().marge(newTuple(newFilledCollection(newElement(""), that.columnCount()))).marge(t2.getRight())
+    Next
+    Set insertColumn = newTable(newTuple(c), h2.getLeft().marge(that.getHeader()).marge(h2.getRight()))
+End Property
+
+' 列挿入リバース
+Public Property Get insertColumnR(that As table, n As Long) As table
+    Set insertColumnR = that.insertColumn(clone(), n)
+End Property
+
+
+' 行挿入
+Public Property Get insertRow(that As table, n As Long) As table
+    Dim c As New collection
+    Dim i As Long
+    For i = 1 To rowCount
+        If i = n Then
+            Dim j As Long
+            For j = 1 To that.rowCount
+                If columnCount > that.columnCount Then
+                    c.add that.getTuple(j).paddingLeft(newElement(""), rowCount())
+                Else
+                    c.add that.getTuple(j).trim(newSelection(1, rowCount))
+                End If
+            Next
+        End If
+        c.add getTuple(i)
+    Next
+    Set insertRow = newTable(newTuple(c), getHeader)
+End Property
+
+' 列交互マージ
+Public Property Get zip(that As table) As table
+    Dim count As Long
+    count = less(rowCount(), that.rowCount())
+    Dim c As New collection
+    Dim i As Long
+    For i = 1 To count
+        c.add getTuple(i).zip(that.getTuple(i))
+    Next
+    Set zip = newTable(newTuple(c), header.zip(that.getHeader()))
+End Property
+
+' 列交互マージリバース
+Public Property Get zipR(that As table) As table
+    Set zipR = that.zip(clone())
+End Property
+
+' スキップ列交互マージ
+Public Property Get skipZip(that As table, n As Long) As table
+    Dim count As Long
+    count = less(rowCount(), that.rowCount())
+    Dim c As New collection
+    Dim i As Long
+    For i = 1 To count
+        c.add getTuple(i).skipZip(that.getTuple(i), n)
+    Next
+    Set skipZip = newTable(newTuple(c), header.skipZip(that.getHeader(), n))
+End Property
+
+' スキップ列交互マージリバース
+Public Property Get skipZipR(that As table, n As Long) As table
+    Set skipZipR = that.skipZip(clone(), n)
+End Property
+
+' 行交互マージ
+Public Property Get pile(that As table) As table
+    Set pile = newTable(tuples.zip(that.getTuples()), getHeader())
+End Property
+
+' 行互マージリバース
+Public Property Get pileR(that As table) As table
+    Set pileR = that.pile(clone())
+End Property
+
+' スキップ行交互マージ
+Public Property Get skipPile(that As table, n As Long) As table
+    Set skipPile = newTable(tuples.skipZip(that.getTuples(), n), getHeader())
+End Property
+
+' スキップ行交互マージリバース
+Public Property Get skipPileR(that As table, n As Long) As table
+    Set skipPileR = that.skipPile(clone(), n)
+End Property
+
+' 上
+Public Property Get abave(that As table) As table
+    Set abave = newTable(getTuples().marge(that.getTuples()), getHeader())
+End Property
+
+' 下
+Public Property Get under(that As table) As table
+    Set under = that.abave(clone())
+End Property
+
+' 左
+Public Property Get left(that As table) As table
+    Dim last As Long
+    last = less(rowCount(), that.rowCount())
+    Dim c As New collection
+    Dim i As Long
+    For i = 1 To last
+        c.add getTuple(i).marge(that.getTuple(i))
+    Next
+    If last = rowCount Then
+        For i = last + 1 To that.rowCount
+            c.add newTuple(newFilledCollection(newElement(""), columnCount())).marge(that.getTuple(i))
+        Next
+    ElseIf last = that.rowCount() Then
+        For i = last + 1 To rowCount
+            c.add getTuple(i).marge(newTuple(newFilledCollection(newElement(""), that.columnCount)))
+        Next
+    End If
+    
+    Set left = newTable(newTuple(c), header.marge(that.getHeader()))
+End Property
+
+' 右
+Public Property Get right(that As table) As table
+    Set right = that.left(clone())
+End Property
+
+' タプ
+Public Property Get getTuple(n As Long) As Tuple
+    Set getTuple = tuples.getValue(n)
+End Property
+
+' タプタプ
+Public Property Get getTuples() As Tuple
+    Set getTuples = tuples.clone
+End Property
+
+' ヘッダ
+Public Property Get getHeader() As Tuple
+    Set getHeader = header.clone
+End Property
+
+' カラム数
+Public Property Get columnCount() As Long
+    If tuples.count = 0 Then
+        columnCount = 0
+    Else
+        columnCount = getTuple(1).count()
+    End If
+End Property
+
+Public Property Get rowCount() As Long
+    rowCount = tuples.count()
+End Property
+
+Public Function terminate()
+End Function
+

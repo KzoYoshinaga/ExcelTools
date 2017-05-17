@@ -88,6 +88,28 @@ Public Property Get trimByRows(s As Selection) As table
     Set trimByRows = newTable(getTuples.trim(s), getHeader)
 End Property
 
+' 列リピート
+Public Property Get repeatColumns(times As Long) As table
+    Dim i As Long
+    Dim t As New table
+    Set t = clone()
+    For i = 1 To times - 1
+        Set t = t.left(clone())
+    Next
+    Set repeatColumns = t
+End Property
+
+' 行リピート
+Public Property Get repeatRows(times As Long) As table
+    Dim i As Long
+    Dim t As New table
+    Set t = clone()
+    For i = 1 To times - 1
+        Set t = t.abave(clone())
+    Next
+    Set repeatRows = t
+End Property
+
 ' 列挿入
 Public Property Get insertColumn(that As table, n As Long) As table
     Dim h2 As Tuples2

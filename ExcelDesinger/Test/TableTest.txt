@@ -19,10 +19,37 @@ Private Function test()
 
     Sheets("test").Cells.Clear
     Call t. _
-          import(cell("zip", "A1")). _
-          insertColumn(t.import(cell("pile", "A1")), 2). _
+          import(cell("A", "A1")). _
+          insertRow(t.import(cell("B", "A1")), 2). _
+          repeatRows(2). _
+          repeatColumns(3). _
           export(cell("test", "A1")). _
           terminate
+
+    Sheets("test2").Cells.Clear
+    Dim shopClassTable As table
+
+    ' テーブル作成
+    Set shopClassTable = t.import(cell("合計", "A1")). _
+                            pile(t.import(cell("前日", "A1"))). _
+                            skipPile(t.import(cell("当日", "A1")), 2)
+    ' 見出し行確保
+    Dim midasi As table
+    Set midasi = shopClassTable. _
+                   trimByColumns(newSelection(1, 1)). _
+                   repeatColumns(shopClassTable.columnCount)
+
+    ' 見出しを混ぜる
+    Dim midasiZipped As table
+    Set midasiZipped = shopClassTable.zip(midasi)
+
+
+    ' 先頭２列を除いて出力
+    Call midasiZipped. _
+            trimByColumns(newSelection(3, midasiZipped.columnCount - 1)). _
+            export(cell("test2", "A1")). _
+            terminate
+
 End Function
 
 

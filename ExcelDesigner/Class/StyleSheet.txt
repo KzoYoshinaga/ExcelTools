@@ -5,10 +5,11 @@
 ' スタイルシート
 Private s As String
 
-' スタイルキャッシュ
+' Styleコレクション　タグごとに1つのStyle
 Private c As New collection
 
 ' スタイル適用
-Public Property Get apply(r As Range)
+' 与えられたタグにマッチするスタイルを適用する
+Public Property Get apply(tag As String, r As Range)
 
 End Property

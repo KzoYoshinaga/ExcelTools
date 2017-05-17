@@ -1,0 +1,11 @@
+' スタイルを解釈し実行
+
+' メンバ ***************************
+Private s As String
+
+' スタイル適用
+' 与えられたセルにスタイルを適用する
+Public Property Get apply(r As Range)
+
+End Property
+

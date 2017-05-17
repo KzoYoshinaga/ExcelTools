@@ -1,4 +1,14 @@
-' Styleをセットするテーブル
-' 既存のテーブルから取得
-' エレメントにはStyleクラスのインスタンスを格納
+' スタイルシート文字列を解釈して指定したセルに適用する
+' 一度解釈したスタイルはキャッシュする
 
+' メンバ ****************************
+' スタイルシート
+Private s As String
+
+' スタイルキャッシュ
+Private c As New collection
+
+' スタイル適用
+Public Property Get apply(r As Range)
+
+End Property

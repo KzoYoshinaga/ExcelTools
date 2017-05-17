@@ -71,6 +71,23 @@ Public Property Get exportWithoutHeader(r As Range) As table
     Set exportWithoutHeader = clone()
 End Property
 
+' 行コピー
+Public Property Get trimByColumns(s As Selection) As table
+    Dim h As New Tuple
+    Set h = header.trim(s)
+    Dim c As New collection
+    Dim i As Long
+    For i = 1 To rowCount()
+        c.add getTuple(i).trim(s)
+    Next
+    Set trimByColumns = newTable(newTuple(c), h)
+End Property
+
+' 列コピー
+Public Property Get trimByRows(s As Selection) As table
+    Set trimByRows = newTable(getTuples.trim(s), h)
+End Property
+
 ' 行挿入
 Public Property Get insertColumn(that As table, n As Long) As table
     Dim h2 As Tuples2

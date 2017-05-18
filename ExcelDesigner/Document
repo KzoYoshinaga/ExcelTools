@@ -1,0 +1,72 @@
+Table API
+
+' データインポート ヘッダあり
+' @param s: Worksheet インポートするテーブルが格納されたシート
+Public Property Get import(r As Range) As table
+
+' データエクスポート
+' @param r: Range エクスポートするテーブルを配置するセル
+Public Property Get export(r As Range) As table
+
+' データエクスポート
+' @param r: Range エクスポートするテーブルを配置するセル
+Public Property Get exportWithoutHeader(r As Range) As table
+
+' 列コピー
+Public Property Get trimByColumns(s As Selection) As table
+
+' 行コピー
+Public Property Get trimByRows(s As Selection) As table
+
+' 列リピート
+Public Property Get repeatColumns(times As Long) As table
+
+' 行リピート
+Public Property Get repeatRows(times As Long) As table
+
+
+' 列挿入
+Public Property Get insertColumn(that As table, n As Long) As table
+
+' 列挿入リバース
+Public Property Get insertColumnR(that As table, n As Long) As table
+
+' 行挿入
+Public Property Get insertRow(that As table, n As Long) As table
+
+' 列交互マージ
+Public Property Get zip(that As table) As table
+
+' 列交互マージリバース
+Public Property Get zipR(that As table) As table
+
+
+' スキップ列交互マージ
+Public Property Get skipZip(that As table, n As Long) As table
+
+' スキップ列交互マージリバース
+Public Property Get skipZipR(that As table, n As Long) As table
+
+' 行交互マージ
+Public Property Get pile(that As table) As table
+
+' 行互マージリバース
+Public Property Get pileR(that As table) As table
+
+' スキップ行交互マージ
+Public Property Get skipPile(that As table, n As Long) As table
+
+' スキップ行交互マージリバース
+Public Property Get skipPileR(that As table, n As Long) As table
+
+' 上
+Public Property Get abave(that As table) As table
+
+' 下
+Public Property Get under(that As table) As table
+
+' 左
+Public Property Get left(that As table) As table
+
+' 右
+Public Property Get right(that As table) As table

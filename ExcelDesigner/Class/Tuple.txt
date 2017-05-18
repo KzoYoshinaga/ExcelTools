@@ -91,7 +91,7 @@ Public Property Get insert(that As Tuple, dest As Long) As Tuple
     t3.setMiddle = that.clone()
     t3.setRight = t2.getRight()
     ' タプルマージ
-    Set insert = t3.marge()
+    Set insert = t3.merge()
 End Property
 
 ' 値挿入リバース
@@ -168,19 +168,19 @@ End Property
 ' マージ
 ' @param that: Tuple マージ対象タプル
 ' @return Tuple マージされた新しいタプル
-Public Property Get marge(that As Tuple) As Tuple
+Public Property Get merge(that As Tuple) As Tuple
     Dim vs As collection
     Set vs = newCollection(values)
     Dim i As Long
     For i = 1 To that.count()
         vs.add that.getValue(i)
     Next
-    Set marge = newTuple(vs)
+    Set merge = newTuple(vs)
 End Property
 
 ' マージリバース
-Public Property Get margeR(that As Tuple) As Tuple
-    Set margeR = that.marge(clone())
+Public Property Get mergeR(that As Tuple) As Tuple
+    Set mergeR = that.merge(clone())
 End Property
 
 ' 交互マージ
@@ -233,12 +233,12 @@ End Property
 
 ' パディング左
 Public Property Get paddingLeft(v, size As Long) As Tuple
-   Set paddingLeft = newTuple(newFilledCollection(v, size - count)).marge(clone)
+   Set paddingLeft = newTuple(newFilledCollection(v, size - count)).merge(clone)
 End Property
 
 ' パディング右
 Public Property Get paddingRight(v, size As Long) As Tuple
-    Set paddingRight = marge(newTuple(newFilledCollection(v, size - count)))
+    Set paddingRight = merge(newTuple(newFilledCollection(v, size - count)))
 End Property
 
 ' リピート
@@ -246,7 +246,7 @@ Public Property Get repeat(times As Long) As Tuple
     Dim t As New Tuple
     Dim i As Long
     For i = 1 To times
-        Set t = t.marge(clone())
+        Set t = t.merge(clone())
     Next
     Set repeat = t
 End Property

@@ -34,6 +34,6 @@ Public Property Get getRight() As Tuple
     Set getRight = right.clone()
 End Property
 
-Public Property Get marge() As Tuple
-    Set marge = left.marge(right)
+Public Property Get merge() As Tuple
+    Set merge = left.merge(right)
 End Property

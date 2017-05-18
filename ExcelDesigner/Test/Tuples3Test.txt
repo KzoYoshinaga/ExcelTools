@@ -105,9 +105,9 @@ Private Function getRight()
 End Function
 
 ' 結合されたタプルが取り出せること
-Private Function marge()
+Private Function merge()
     ' SetTestName
-    testName = "marge()"
+    testName = "merge()"
 
     ' Arrange
     Dim values1 As New collection
@@ -123,7 +123,7 @@ Private Function marge()
     ts3.setRight = newTuple(values3)
 
     Dim r As Tuple
-    Set r = ts3.marge()
+    Set r = ts3.merge()
 
     ' Verification
     result = equals(r.toString, "Tuple(a, b, c)")

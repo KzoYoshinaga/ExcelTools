@@ -781,12 +781,12 @@ Private Function pasteWholeSelection()
     verify result, testName
 End Function
 
-' marge() ****************************************
+' merge() ****************************************
 
 ' 元、対象ともに空でないとき、対象がマージされること
-Private Function margeWhenOriginAndOppositAreNotEmpty()
+Private Function mergeWhenOriginAndOppositAreNotEmpty()
     ' SetTestName
-    testName = "margeWhenOriginAndOppositAreNotEmpty()"
+    testName = "mergeWhenOriginAndOppositAreNotEmpty()"
 
     ' Arrange
     Dim values1 As New collection
@@ -805,7 +805,7 @@ Private Function margeWhenOriginAndOppositAreNotEmpty()
 
     ' Do
     Dim t As Tuple
-    Set t = t1.marge(t2)
+    Set t = t1.merge(t2)
 
     ' Verification
     result = equals(t.toString, "Tuple(a, b, c, d)")
@@ -813,9 +813,9 @@ Private Function margeWhenOriginAndOppositAreNotEmpty()
 End Function
 
 ' 元が空のとき、対象がのみのタプルが返ること
-Private Function margeReturnOppositeWhenOriginWasEmpty()
+Private Function mergeReturnOppositeWhenOriginWasEmpty()
     ' SetTestName
-    testName = "margeReturnOppositeWhenOriginWasEmpty()"
+    testName = "mergeReturnOppositeWhenOriginWasEmpty()"
 
     ' Arrange
     Dim values1 As New collection
@@ -831,7 +831,7 @@ Private Function margeReturnOppositeWhenOriginWasEmpty()
 
     ' Do
     Dim t As Tuple
-    Set t = t1.marge(t2)
+    Set t = t1.merge(t2)
 
     ' Verification
     result = equals(t.toString, "Tuple(d)")
@@ -840,9 +840,9 @@ End Function
 
 
 ' 対象が空のとき、元のみのタプルが返されること
-Private Function margeReturnOriginWhenOppositeWasEmpty()
+Private Function mergeReturnOriginWhenOppositeWasEmpty()
     ' SetTestName
-    testName = "margeReturnOriginWhenOppositeWasEmpty()"
+    testName = "mergeReturnOriginWhenOppositeWasEmpty()"
 
     ' Arrange
     Dim values1 As New collection
@@ -860,7 +860,7 @@ Private Function margeReturnOriginWhenOppositeWasEmpty()
 
     ' Do
     Dim t As Tuple
-    Set t = t1.marge(t2)
+    Set t = t1.merge(t2)
 
     ' Verification
     result = equals(t.toString, "Tuple(a, b, c)")
@@ -1317,10 +1317,10 @@ Function TupleTest()
     pasteWhenSelectionForward
     pasteWholeSelection
 
-    ' marge()
-    margeWhenOriginAndOppositAreNotEmpty
-    margeReturnOppositeWhenOriginWasEmpty
-    margeReturnOriginWhenOppositeWasEmpty
+    ' merge()
+    mergeWhenOriginAndOppositAreNotEmpty
+    mergeReturnOppositeWhenOriginWasEmpty
+    mergeReturnOriginWhenOppositeWasEmpty
 
      ' zip()
     zipWith2SameSizeTupples

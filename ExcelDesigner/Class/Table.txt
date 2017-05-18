@@ -46,7 +46,7 @@ Public Property Get export(r As Range) As table
     Dim i As Long
     Dim j As Long
     Dim th As Tuple
-    Set th = newTuple(newFilledCollection(header, 1)).marge(tuples)
+    Set th = newTuple(newFilledCollection(header, 1)).merge(tuples)
     For i = 1 To th.count()
         Set t = th.getValue(i)
         For j = 1 To t.count()
@@ -121,13 +121,13 @@ Public Property Get insertColumn(that As table, n As Long) As table
     Dim i As Long
     For i = 1 To min
         Set t2 = getTuple(i).split(n)
-        c.add t2.getLeft().marge(that.getTuple(i)).marge(t2.getRight())
+        c.add t2.getLeft().merge(that.getTuple(i)).merge(t2.getRight())
     Next
     For i = min + 1 To rowCount()
         Set t2 = getTuple(i).split(n)
-        c.add t2.getLeft().marge(newTuple(newFilledCollection(newElement(""), that.columnCount()))).marge(t2.getRight())
+        c.add t2.getLeft().merge(newTuple(newFilledCollection(newElement(""), that.columnCount()))).merge(t2.getRight())
     Next
-    Set insertColumn = newTable(newTuple(c), h2.getLeft().marge(that.getHeader()).marge(h2.getRight()))
+    Set insertColumn = newTable(newTuple(c), h2.getLeft().merge(that.getHeader()).merge(h2.getRight()))
 End Property
 
 ' 列挿入リバース
@@ -212,7 +212,7 @@ End Property
 
 ' 上
 Public Property Get abave(that As table) As table
-    Set abave = newTable(getTuples().marge(that.getTuples()), getHeader())
+    Set abave = newTable(getTuples().merge(that.getTuples()), getHeader())
 End Property
 
 ' 下
@@ -227,19 +227,19 @@ Public Property Get left(that As table) As table
     Dim c As New collection
     Dim i As Long
     For i = 1 To last
-        c.add getTuple(i).marge(that.getTuple(i))
+        c.add getTuple(i).merge(that.getTuple(i))
     Next
     If last = rowCount Then
         For i = last + 1 To that.rowCount
-            c.add newTuple(newFilledCollection(newElement(""), columnCount())).marge(that.getTuple(i))
+            c.add newTuple(newFilledCollection(newElement(""), columnCount())).merge(that.getTuple(i))
         Next
     ElseIf last = that.rowCount() Then
         For i = last + 1 To rowCount
-            c.add getTuple(i).marge(newTuple(newFilledCollection(newElement(""), that.columnCount)))
+            c.add getTuple(i).merge(newTuple(newFilledCollection(newElement(""), that.columnCount)))
         Next
     End If
 
-    Set left = newTable(newTuple(c), header.marge(that.getHeader()))
+    Set left = newTable(newTuple(c), header.merge(that.getHeader()))
 End Property
 
 ' 右

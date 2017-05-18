@@ -1,11 +1,54 @@
 ' スタイルを解釈し実行
 
 ' メンバ ***************************
-Private s As String
+Private attr As String
+Private value As String
+
+' イニシャライザ *******************
+Public Property Let setAttribute(a As String)
+    attr = a
+End Property
+
+Public Property Let setValue(v)
+    value = v
+End Property
 
 ' スタイル適用
 ' 与えられたセルにスタイルを適用する
-Public Property Get apply(r As Range)
+Public Sub apply(r As Range)
+    If attr = "" Then Exit Sub
+    If attr = "color" Then Call setColor(r)
+    If attr = "mergeForward" Then Call mergeForward(r)
+    If attr = "mergeBack" Then Call mergeBack(r)
+End Sub
 
-End Property
+' 色指定
+Private Sub setColor(r As Range)
+On Error GoTo Exception
+    r.Interior.Color = value
+Exception:
+End Sub
+
+' 前方結合
+Private Sub mergeForward(r As Range)
+On Error GoTo Exception
+    Application.DisplayAlerts = False
+    Range(r, r.Offset(0, CInt(value))).Merge
+Exception:
+    Application.DisplayAlerts = True
+End Sub
+
+' 後方結合
+Private Sub mergeBack(r As Range)
+On Error GoTo Exception
+    Application.DisplayAlerts = False
+    s = r.value
+    Set r = Range(r.Offset(0, 0 - CInt(value)), r)
+    r.Merge
+    r.value = s
+    r.HorizontalAlignment = xlLeft
+     Debug.Print CInt(value)
+Exception:
+    Application.DisplayAlerts = True
+End Sub
 

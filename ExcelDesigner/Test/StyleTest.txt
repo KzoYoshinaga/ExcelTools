@@ -1,0 +1,5 @@
+Private Function styleTest()
+    Dim s As Style
+    Set s = newStyle("mergeBack", 2)
+    Call s.apply(Sheets("test2").Range("C3"))
+End Function

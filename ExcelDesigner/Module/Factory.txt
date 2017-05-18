@@ -62,3 +62,10 @@ Function newFilledCollection(v, size As Long) As collection
     Next
     Set newFilledCollection = r
 End Function
+
+Function newStyle(attr As String, value As String) As Style
+    Dim r As New Style
+    r.setAttribute = attr
+    r.setValue = value
+    Set newStyle = r
+End Function

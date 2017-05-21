@@ -1,0 +1,221 @@
+' ファンクション雛形
+Public Function func()
+On erroro GoTo Exception
+    'start
+
+    ' ???
+
+    'end
+    func = 0
+    End Function
+Exception:
+    func = 1
+End Function
+
+' 前処理
+Public Function 満車ログ_料金クラスコード修正()
+    On erroro GoTo Exception
+    'start
+    If 満車ログ_料金サブクラスコード_ハイフンあり修正() = 1 Then Err.Raise
+    If 満車ログ_料金サブクラス_ハイフンなし修正() = 1 Then Err.Raise
+    'end
+    満車ログ_料金クラスコード修正 = 0
+    End Function
+Exception:
+    満車ログ_料金クラスコード修正 = 1
+End Function
+
+' 日別
+Public Function 満車ログ_日別()
+On erroro GoTo Exception
+    'start
+
+    ' ???
+
+    'end
+    満車ログ_日別 = 0
+    End Function
+Exception:
+    満車ログ_日別 = 1
+End Function
+
+
+' 月別
+Public Function 満車ログ_月別()
+On erroro GoTo Exception
+    'start
+
+    ' ???
+
+    'end
+    満車ログ_月別 = 0
+    End Function
+Exception:
+    満車ログ_月別 = 1
+End Function
+
+
+
+' private ************************************************************************
+
+' ヘルパ ***
+
+' 処理をする月の初日を取得する
+Private Function getYYYYMM01() As String
+    '満車ログの登録日より処理月を判定
+On erroro GoTo Exception
+    'start
+    Dim db As DAO.Database
+    Set db = CurrentDb()
+    Dim rs As DAO.Recordset
+    Set rs = db.OpenRecordset("SELECT 登録日 FROM 満車ログ", dbOpenForwardOnly)
+
+    Dim dateString As String
+    dateString = rs!登録日
+
+    rs.Close
+    rs = Nothing
+
+    ' ??? 形式を確認
+
+
+    'end
+    getYYYYMM01 = 0
+    End Function
+Exception:
+    If rs Is Not Nothing Then
+        rs.Close
+        rs = Nothing
+    End If
+    getYYYYMM01 = 1
+End Function
+
+
+' モデル作成　***
+
+Private Function 満車ログ_料金サブクラスコード_ハイフンあり修正()
+On erroro GoTo Exception
+    'start
+
+    ' ???
+
+    'end
+    満車ログ_料金サブクラス_ハイフンあり修正 = 0
+    End Function
+Exception:
+    満車ログ_料金サブクラス_ハイフンあり修正 = 1
+End Function
+
+Private Function 満車ログ_料金サブクラス_ハイフンなし修正()
+On erroro GoTo Exception
+    'start
+
+    ' ???
+
+    'end
+    満車ログ_料金サブクラス_ハイフンあり修正 = 0
+    End Function
+Exception:
+    満車ログ_料金サブクラス_ハイフンあり修正 = 1
+End Function
+
+
+' モデルの最終結果を作成する
+' @param carOrClass: String "在庫問合車名" or "在庫問合料金クラス"
+' @param shopOrR: String "出発Ｒ店コード" or "出発Ｒ店コード, 出発営業所コード"
+' @param d: String "yyyy/mm/dd" or ""
+Private Function 日別月別(carOrClass As String, shopOrR As String, Optional d As String = "")
+On erroro GoTo Exception
+    'start
+
+    ' 車名 or 料金フィルタ
+    Dim carFilter As String
+    Dim commonFilter As stirng
+    commonFilterfilter = "在庫問合結果在庫数='0' AND 在庫問合更新フラグ='1'"
+    If carOrClass = "在庫問合車名" Then
+        carFilter = "(IIF(Trim([受付完了フラグ])='1', False, True)=True)" & " AND " & commonFilter
+    ElseIf carOrClass = "在庫問合料金クラス" Then
+        carFilter = "(在庫問合車名 Is Null) AND (在庫問合料金クラス Is Not Null)" & " AND " & commonFilter
+    Else
+        Err.Rais
+    End If
+
+     ' 日付フィルタ
+    Dim dateFilter As String
+    If d = "" Then
+        dateFilter = ""
+    Else
+        dateFilter = "AND 登録日='" & d & "'"
+    End If
+
+    ' 入力テーブル
+    Dim inputTable As String
+    inputTable = "満車ログ_料金サブクラス_修正後"
+
+    ' 出力カラム
+    Dim columns As String
+    columns = shopOrR & carOrClass
+
+     ' 出力テーブル名
+    Dim outputTable As String
+    If d = "" Then
+        outputTable = outputTable & "月別_"
+    Else
+        outputTable = outputTable & "日別_"
+    End If
+    If carOrClass = "在庫問合車名" Then
+        outputTable = outputTable & "車名別_"
+    Else
+        outputTable = outputTable & "料金クラス別_"
+    End If
+    If shopOrR = "出発Ｒ店コード" Then
+        outputTable = "Ｒ店別"
+    Else
+        outputTable = "店舗別"
+    End If
+
+    ' 既存出力テーブル削除
+    Call deleteTable(outputTable)
+
+    ' SQL組み立て
+    request = "SELECT * FROM " & inputTable & " WHERE " & carFilter & dateFilter
+    ippan = "SELECT * FROM (" & request & ") " & " WHERE 会員ＩＤ Is Null"
+    kaiin = "SELECT " & columns & ", First(セッションＩＤ) FROM (" & request & ") WHERE 会員ＩＤ Is Not Null GROUP BY " & columns & ", 会員コード"
+    union = "SELECT * FROM (" & kaiin & ") UNION ALL SELECT " & columns & ", セッションＩＤ FROM (" & ippan & ")"
+    session = "SELECT " & columns & " INTO " & outputTable & " FROM (" & union & " GROUP BY " & columns & ", セッションＩＤ"
+
+    ' SQL実行
+    DoCmd.RunSQL session
+
+    'end
+    日別月別 = 0
+    End Function
+Exception:
+    日別月別 = 1
+End Function
+
+' テーブル削除
+Private Sub deleteTable(table As String)
+On erro GoTo Exception
+    DoCmd.DeleteObject acTable, table
+Exception:
+End Sub
+
+' ビュー作成 ***
+
+' 指定した項目以外を合計する
+
+
+' 空欄を指定した値で埋める
+
+
+
+
+
+
+
+
+
+
+
+

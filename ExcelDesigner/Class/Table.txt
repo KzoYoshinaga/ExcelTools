@@ -15,8 +15,8 @@ Public Property Let setHeader(h As Tuple)
 End Property
 
 ' クローン **************************
-Public Property Get clone() As table
-    Dim r As New table
+Public Property Get clone() As Table
+    Dim r As New Table
     r.setTuples = tuples.clone()
     r.setHeader = header.clone()
     Set clone = r
@@ -26,15 +26,15 @@ End Property
 
 ' データインポート　ヘッダあり
 ' @param s: Worksheet インポートするテーブルが格納されたシート
-Public Property Get import(r As Range) As table
-    Dim sh As sheet
+Public Property Get import(r As Range) As Table
+    Dim sh As Sheet
     Set sh = newSheet(r)
-    Dim c As New collection
+    Dim c As New Collection
     Set header = newTuple(sh.getRowCollection(1))
 
     Dim i As Long
     For i = 2 To sh.getRowCount()
-        c.add newTuple(sh.getRowCollection(i))
+        c.Add newTuple(sh.getRowCollection(i))
     Next
     Set tuples = newTuple(c)
     Set import = clone()
@@ -42,7 +42,7 @@ End Property
 
 ' データエクスポート
 ' @param r: Range エクスポートするテーブルを配置するセル
-Public Property Get export(r As Range) As table
+Public Property Get export(r As Range) As Table
     Dim i As Long
     Dim j As Long
     Dim th As Tuple
@@ -58,7 +58,7 @@ End Property
 
 ' データエクスポート
 ' @param r: Range エクスポートするテーブルを配置するセル
-Public Property Get exportWithoutHeader(r As Range) As table
+Public Property Get exportWithoutHeader(r As Range) As Table
     Dim i As Long
     Dim j As Long
     Dim t As Tuple
@@ -72,26 +72,26 @@ Public Property Get exportWithoutHeader(r As Range) As table
 End Property
 
 ' 列コピー
-Public Property Get trimByColumns(s As Selection) As table
+Public Property Get trimByColumns(s As Selection) As Table
     Dim h As New Tuple
     Set h = header.trim(s)
-    Dim c As New collection
+    Dim c As New Collection
     Dim i As Long
     For i = 1 To rowCount()
-        c.add getTuple(i).trim(s)
+        c.Add getTuple(i).trim(s)
     Next
     Set trimByColumns = newTable(newTuple(c), h)
 End Property
 
 ' 行コピー
-Public Property Get trimByRows(s As Selection) As table
+Public Property Get trimByRows(s As Selection) As Table
     Set trimByRows = newTable(getTuples.trim(s), getHeader)
 End Property
 
 ' 列リピート
-Public Property Get repeatColumns(times As Long) As table
+Public Property Get repeatColumns(times As Long) As Table
     Dim i As Long
-    Dim t As New table
+    Dim t As New Table
     Set t = clone()
     For i = 1 To times - 1
         Set t = t.left(clone())
@@ -100,9 +100,9 @@ Public Property Get repeatColumns(times As Long) As table
 End Property
 
 ' 行リピート
-Public Property Get repeatRows(times As Long) As table
+Public Property Get repeatRows(times As Long) As Table
     Dim i As Long
-    Dim t As New table
+    Dim t As New Table
     Set t = clone()
     For i = 1 To times - 1
         Set t = t.abave(clone())
@@ -111,131 +111,131 @@ Public Property Get repeatRows(times As Long) As table
 End Property
 
 ' 列挿入
-Public Property Get insertColumn(that As table, n As Long) As table
+Public Property Get insertColumn(that As Table, n As Long) As Table
     Dim h2 As Tuples2
     Set h2 = header.split(n)
     Dim t2 As Tuples2
-    Dim c As New collection
+    Dim c As New Collection
     Dim min As Long
     min = less(rowCount(), that.rowCount())
     Dim i As Long
     For i = 1 To min
         Set t2 = getTuple(i).split(n)
-        c.add t2.getLeft().merge(that.getTuple(i)).merge(t2.getRight())
+        c.Add t2.getLeft().merge(that.getTuple(i)).merge(t2.getRight())
     Next
     For i = min + 1 To rowCount()
         Set t2 = getTuple(i).split(n)
-        c.add t2.getLeft().merge(newTuple(newFilledCollection(newElement(""), that.columnCount()))).merge(t2.getRight())
+        c.Add t2.getLeft().merge(newTuple(newFilledCollection(newElement(""), that.columnCount()))).merge(t2.getRight())
     Next
     Set insertColumn = newTable(newTuple(c), h2.getLeft().merge(that.getHeader()).merge(h2.getRight()))
 End Property
 
 ' 列挿入リバース
-Public Property Get insertColumnR(that As table, n As Long) As table
+Public Property Get insertColumnR(that As Table, n As Long) As Table
     Set insertColumnR = that.insertColumn(clone(), n)
 End Property
 
 
 ' 行挿入
-Public Property Get insertRow(that As table, n As Long) As table
-    Dim c As New collection
+Public Property Get insertRow(that As Table, n As Long) As Table
+    Dim c As New Collection
     Dim i As Long
     For i = 1 To rowCount
         If i = n Then
             Dim j As Long
             For j = 1 To that.rowCount
                 If columnCount > that.columnCount Then
-                    c.add that.getTuple(j).paddingLeft(newElement(""), rowCount())
+                    c.Add that.getTuple(j).paddingLeft(newElement(""), rowCount())
                 Else
-                    c.add that.getTuple(j).trim(newSelection(1, rowCount))
+                    c.Add that.getTuple(j).trim(newSelection(1, rowCount))
                 End If
             Next
         End If
-        c.add getTuple(i)
+        c.Add getTuple(i)
     Next
     Set insertRow = newTable(newTuple(c), getHeader)
 End Property
 
 ' 列交互マージ
-Public Property Get zip(that As table) As table
+Public Property Get zip(that As Table) As Table
     Dim count As Long
     count = less(rowCount(), that.rowCount())
-    Dim c As New collection
+    Dim c As New Collection
     Dim i As Long
     For i = 1 To count
-        c.add getTuple(i).zip(that.getTuple(i))
+        c.Add getTuple(i).zip(that.getTuple(i))
     Next
     Set zip = newTable(newTuple(c), header.zip(that.getHeader()))
 End Property
 
 ' 列交互マージリバース
-Public Property Get zipR(that As table) As table
+Public Property Get zipR(that As Table) As Table
     Set zipR = that.zip(clone())
 End Property
 
 ' スキップ列交互マージ
-Public Property Get skipZip(that As table, n As Long) As table
+Public Property Get skipZip(that As Table, n As Long) As Table
     Dim count As Long
     count = less(rowCount(), that.rowCount())
-    Dim c As New collection
+    Dim c As New Collection
     Dim i As Long
     For i = 1 To count
-        c.add getTuple(i).skipZip(that.getTuple(i), n)
+        c.Add getTuple(i).skipZip(that.getTuple(i), n)
     Next
     Set skipZip = newTable(newTuple(c), header.skipZip(that.getHeader(), n))
 End Property
 
 ' スキップ列交互マージリバース
-Public Property Get skipZipR(that As table, n As Long) As table
+Public Property Get skipZipR(that As Table, n As Long) As Table
     Set skipZipR = that.skipZip(clone(), n)
 End Property
 
 ' 行交互マージ
-Public Property Get pile(that As table) As table
+Public Property Get pile(that As Table) As Table
     Set pile = newTable(tuples.zip(that.getTuples()), getHeader())
 End Property
 
 ' 行互マージリバース
-Public Property Get pileR(that As table) As table
+Public Property Get pileR(that As Table) As Table
     Set pileR = that.pile(clone())
 End Property
 
 ' スキップ行交互マージ
-Public Property Get skipPile(that As table, n As Long) As table
+Public Property Get skipPile(that As Table, n As Long) As Table
     Set skipPile = newTable(tuples.skipZip(that.getTuples(), n), getHeader())
 End Property
 
 ' スキップ行交互マージリバース
-Public Property Get skipPileR(that As table, n As Long) As table
+Public Property Get skipPileR(that As Table, n As Long) As Table
     Set skipPileR = that.skipPile(clone(), n)
 End Property
 
 ' 上
-Public Property Get abave(that As table) As table
+Public Property Get abave(that As Table) As Table
     Set abave = newTable(getTuples().merge(that.getTuples()), getHeader())
 End Property
 
 ' 下
-Public Property Get under(that As table) As table
+Public Property Get under(that As Table) As Table
     Set under = that.abave(clone())
 End Property
 
 ' 左
-Public Property Get left(that As table) As table
+Public Property Get left(that As Table) As Table
     Dim last As Long
     last = less(rowCount(), that.rowCount())
-    Dim c As New collection
+    Dim c As New Collection
     Dim i As Long
     For i = 1 To last
-        c.add getTuple(i).merge(that.getTuple(i))
+        c.Add getTuple(i).merge(that.getTuple(i))
     Next
     If last = rowCount Then
         For i = last + 1 To that.rowCount
-            c.add newTuple(newFilledCollection(newElement(""), columnCount())).merge(that.getTuple(i))
+            c.Add newTuple(newFilledCollection(newElement(""), columnCount())).merge(that.getTuple(i))
         Next
     ElseIf last = that.rowCount() Then
         For i = last + 1 To rowCount
-            c.add getTuple(i).merge(newTuple(newFilledCollection(newElement(""), that.columnCount)))
+            c.Add getTuple(i).merge(newTuple(newFilledCollection(newElement(""), that.columnCount)))
         Next
     End If
 
@@ -243,8 +243,31 @@ Public Property Get left(that As table) As table
 End Property
 
 ' 右
-Public Property Get right(that As table) As table
+Public Property Get right(that As Table) As Table
     Set right = that.left(clone())
+End Property
+
+' ピボット
+Public Property Get pibot() As Table
+    Dim r As Table
+    Dim h As New Collection
+    Dim ts As New Collection
+    Dim t As New Collection
+    Dim i As Long
+    Dim j As Long
+    h.Add header.getValue(1)
+    For i = 1 To rowCount()
+        h.Add getTuple(i).getValue(1)
+    Next
+    For i = 2 To columnCount()
+        t.Add header.getValue(i)
+        For j = 1 To rowCount()
+            t.Add getTuple(j).getValue(i)
+        Next
+        ts.Add newTuple(t)
+        Set t = New Collection
+    Next
+    Set pibot = newTable(newTuple(ts), newTuple(h))
 End Property
 
 ' タプ

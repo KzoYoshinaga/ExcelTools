@@ -1,75 +1,61 @@
-' ビュー作成 ***************
 
 
-'
-' (FromTable)
-'  columnA | columnB | columnC
-' ---------+---------+----------
-'     A    |    a    |  Hoge
-' ---------+---------+----------
-'     B    |    a    |  Hoge
-' ---------+---------+----------
-'     A    |    b    |  Fuga
-' ---------+---------+----------
-'     A    |    a    |  Hoge
-' ---------+---------+----------
-'     B    |    b    |  Fuga
-' ---------+---------+----------
-'     C    |    a    |  Boo
-' ---------+---------+----------
-'
-' rowHeaders(columnA, columnB)
-' columnheader(columnC)
-'
-' (SpreadTable)
-'  columnA | columnB |  Hoge    |  Fuga    |  Boo     |   Sum
-' ---------+---------+----------+----------+----------+----------
-'     A    |    a    |    2     |    0     |    0     |    2
-' ---------+---------+----------+----------+----------+----------
-'     A    |    b    |    0     |    1     |    0     |    1
-' ---------+---------+----------+----------+----------+----------
-'     B    |    a    |    1     |    0     |    0     |    1
-' ---------+---------+----------+----------+----------+----------
-'     B    |    b    |    0     |    1     |    0     |    1
-' ---------+---------+----------+----------+----------+----------
-'     C    |    a    |    0     |    0     |    1     |    1
-' ---------+---------+----------+----------+----------+----------
-'
-' (SumTable)
-'   Hoge    |  Fuga    |  Boo     |   Sum
-' ----------+----------+----------+----------
-'    3      |    2     |   1      |    6
-' ----------+----------+----------+----------
-'
-' @param fromTable: String
-' @param toTable: String
-' @param rowHeaders: Collection
-' @param columnHeader: String
-' @return 正常 = 0
-Public Function countGroupByRowHeaders(fromTable As String, spreadTable As String, sumTable As String, rowHeaders As Collection, columnHeader As String)
-    Dim cn As DAO.Connection
-    Set cn = CurrentDb
-    Dim db As DAO.Database
-    Set db = CurrentDb()
-    Dim rs As DAO.Recordset
-    Set rs = db.OpenRecordset("SELECT * FROM " & table, dbOpenForwardOnly)
+'**************************
+' モデル
 
-    ' スプレッドテーブル作成
-    ' 初期値0
-    '
+'Ｒ店	営業所	車名
+'18221	002		K3
+'66201	001		M1
+'66201	001		M1
+'66201	001		P1
 
-End Function
 
-' 文字列直列化
-Public Function joining(strings As Collection, delimiter As String) As String
-    If strings.Count = 0 Then
-        joining = ""
-        End Function
-    End If
-    Dim r As String
-    r = strings(1)
-    For i = 2 To strings.Count
-        r = delimiter & strings(i)
-    Next
-    joining = r
-End Function
+'**************************
+' 集計ヘルパカラム付与
+
+'tmp = SELECT *, '合計' as 合計, 1 as 数量 FROM モデル
+
+'合計	数量	Ｒ店	営業所	車名
+'合計	1		18221	002		K3
+'合計	1		66201	001		M1
+'合計	1		66201	001		M1
+'合計	1		66201	001		P1
+
+
+'**************************
+' クロス集計①
+
+'TRANSFORM Sum(数量) AS 合計数量
+'SELECT 合計
+'FROM tmp
+'GROUP BY 合計
+'PIVOT 車名;
+
+'合計	K3	M1	P1
+'合計	1	2	1
+
+
+'**************************
+' クロス集計②
+
+'TRANSFORM CInt(Nz(Sum(tmp.[数量]), 0))
+'SELECT tmp.[Ｒ店], tmp.[営業所], Sum(tmp.[数量]) AS 合計
+'FROM tmp
+'GROUP BY tmp.[Ｒ店], tmp.[営業所]
+'PIVOT tmp.[車名];
+
+'Ｒ店	営業所	合計	K3	M1	P1
+'18221	002		1		1	0	0
+'66201	001		3		0	2	1
+
+'**************************
+' クロス集計カラム並び順
+
+
+'**************************
+' 日別表紙
+' 店並び順をストック
+' tmp = SELECT Ｒ店, 営業所 FROM モデル GROUP BY Ｒ店, 営業所
+' 一日毎にLEFT JOIN
+' tmp = SELECT * FROM tmp LEFT JOIN (SELECT R店, 営業所, 合計 AS '4月1日' FROM クロス②) ON Ｒ店 = Ｒ店, 営業所 = 営業所
+

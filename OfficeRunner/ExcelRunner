@@ -30,6 +30,11 @@ Class ExcelRunnableCollection
 	Private runnableArray
 	Private count
 
+	Public Sub Class_Initialize()
+		Set runnableArray = CreateObject("System.Collections.ArrayList")
+		count = 0
+	End Sub
+
 	Public Property Get add(b, m)
 		count = count + 1
 		Dim excelRunnable

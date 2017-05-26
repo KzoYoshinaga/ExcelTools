@@ -26,15 +26,15 @@ With accessMacros
 	.add "営業所マスタインポート"
 	.add "車名マスタインポート"
 	.add "NEO予約ログインポート"
-	.add "満車ログ月別"
-	.add "満車ログ日別"
+	.add "お断り合計月別"
+	.add "お断り合計日別"
 End With
 
 With excelMacros
-	.add "満車ログ.xlsx", "日別表紙"
-	.add "満車ログ.xlsx", "日別シート"
-	.add "満車ログ.xlsx", "月別店舗別"
-	.add "満車ログ.xlsx", "月別Ｒ店別"
+	.add "お断り合計.xlsm", "月別店舗別"
+	.add "お断り合計.xlsm", "月別Ｒ店別"
+	.add "お断り合計.xlsm", "日別表紙"
+	.add "お断り合計.xlsm", "日別シート"
 End With
 
 ' 編集可 ここまで ******************************************

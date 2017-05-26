@@ -1,0 +1,2 @@
+CScript OfficeRunner.vbs
+Pause

@@ -41,7 +41,7 @@ Set fileSystem = CreateObject("Scripting.FileSystemObject")
 Dim currentPath
 currentPath = fileSystem.getParentFolderName(WScript.ScriptFullName)
 
-accessMacros.excecute currentPath, dbName
+accessMacros.execute currentPath, dbName
 excelMacros.execute currentPath
 
 WScript.Echo("All Complete")

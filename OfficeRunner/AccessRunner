@@ -24,7 +24,7 @@ Class AccessRunnableCollection
 	Private runnableArray
 	Private count
 
-	Publec Sub Class_Initialize()
+	Public Sub Class_Initialize()
 		Set runnableArray = CreateObject("System.Collection.ArrayList")
 		count = 0
 	End Sub

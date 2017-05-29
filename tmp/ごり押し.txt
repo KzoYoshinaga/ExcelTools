@@ -1,16 +1,44 @@
+Sub test2()
+Dim target As Range
+Set target = Range("A1").CurrentRegion
+Debug.Print target.Rows.Count
+Debug.Print target.Columns.Count
+
+Debug.Print Cells(1, 2).Address
+
+' ÂÄ§
+Cells(1, target.Columns.Count + 1).Value = "ÂêàË®à"
+For i = 2 To target.Rows.Count
+    Debug.Print "=Sum(" & Cells(i, 3).Address & ":" & Cells(i, target.Columns.Count).Address & ")"
+    Cells(i, target.Columns.Count + 1).Value = "=Sum(" & Cells(i, 3).Address & ":" & Cells(i, target.Columns.Count).Address & ")"
+Next
+
+For i = 3 To target.Columns.Count + 1
+    Cells(target.Rows.Count + 1, i).Value = "=Sum(" & Cells(2, i).Address & ":" & Cells(target.Rows.Count, i).Address & ")"
+Next
+
+End Sub
+
+
 Sub Macro1()
 '
 ' Macro1 Macro
 '
 
 '
+
+
 Dim target As Range
 Set target = Range("A1").CurrentRegion
 Debug.Print target.Rows.Count
 Debug.Print target.Columns.Count
 
+' ÂÄ§
+For i = 2 To target.Rows.Count
+    Cells(i, target.Columns.Count + 1).Value "t"
+Next
 
-    
+' Ëâ≤
 Range(Cells(1, 1), Cells(target.Rows.Count, 2)).Select
 With Selection.Interior
         .Pattern = xlSolid
@@ -30,7 +58,7 @@ With Selection.Interior
         .PatternTintAndShade = 0
 End With
 
-'årê¸
+'ÁΩ´Á∑ö
 target.Select
 With Selection.Borders(xlEdgeLeft)
         .LineStyle = xlContinuous
@@ -68,15 +96,34 @@ With Selection.Borders(xlEdgeLeft)
         .TintAndShade = 0
         .Weight = xlThin
     End With
-    
-    ' ÉpÉfÉBÉìÉO
+
+    ' „Éë„Éá„Ç£„É≥„Ç∞
     Rows("1:10").Select
     Selection.Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
     Columns("A:C").Select
     Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
     Range("J8").Select
 
-    'ï\é¶ògå≈íË
+    'Ë°®Á§∫Êû†Âõ∫ÂÆö
     Range("F12").Select
     ActiveWindow.FreezePanes = True
+End Sub
+
+Sub Êó•Âà•()
+    allApply ("test()")
+End Sub
+
+Sub test()
+    Debug.Print "test"
+End Sub
+
+Sub allApply(macro As String)
+    Debug.Print ThisWorkbook.Sheets.Count
+    For i = 1 To ThisWorkbook.Sheets.Count
+        Sheets(i).Select
+        Range("A1").Select
+        Call test2
+        Call Macro1
+        Debug.Print "?"
+    Next
 End Sub

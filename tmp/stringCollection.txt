@@ -1,0 +1,56 @@
+Public Function joinOn(t1 As String, t2 As String, columns As Collection)
+    joinOn = join(pair(zip(prefix(columns, t1 & "."), prefix(columns, "=" & t2 & "."))), " AND ")
+End Function
+
+Public Function join(strings As Collection, delim As String) As String
+    join = strings(1)
+    For i = 2 To strings.Count
+        join = join & delim & strings(i)
+    Next
+End Function
+
+Public Function sand(pre As String, strings As Collection, suf As String) As Collection
+    Set sand = suffix(prefix(strings, pre), suf)
+End Function
+
+
+Public Function prefix(strings As Collection, pre As String) As Collection
+    Dim r As New Collection
+    For i = 1 To strings.Count
+        r.Add pre & strings(i)
+    Next
+    Set prefix = r
+End Function
+
+Public Function suffix(strings As Collection, suf As String) As Collection
+     Dim r As New Collection
+    For i = 1 To strings.Count
+        r.Add strings(i) & suf
+    Next
+    Set suffix = r
+End Function
+
+Public Function zip(strings1 As Collection, strings2 As Collection) As Collection
+    Dim r As New Collection
+    For i = 1 To low(strings1.Count, strings2.Count)
+        r.Add strings1(i)
+        r.Add strings2(i)
+    Next
+    Set zip = r
+End Function
+
+Public Function low(n1 As Long, n2 As Long) As Long
+    If n1 < n2 Then
+        low = n1
+    Else
+        low = n2
+    End If
+End Function
+
+Public Function pair(strings As Collection) As Collection
+    Dim r As New Collection
+    For i = 1 To strings.Count Step 2
+        r.Add strings(i) & strings(i + 1)
+    Next
+    Set pair = r
+End Function
